@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  month: 1
+  serial: 1
+  year: 1
+  order: 1
+  fix_flag: false
+
+two:
+  month: 1
+  serial: 1
+  year: 1
+  order: 1
+  fix_flag: false
