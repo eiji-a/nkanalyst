@@ -1,0 +1,75 @@
+
+<%= link_to '戻る', :action => :monthly, :id => @siten.id, :month => @month.month %>
+<hr>
+
+<% form_for(@zisseki, :url => {:action => :zupdate, :id => @siten.id}) do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :siten_id, :value => @siten.id %>
+  <%= f.hidden_field :month_id, :value => @month.id %>
+
+  <p>
+    <%= f.submit '更新' %>
+  </p>
+
+  <table width="100%">
+    <tr>
+      <th colspan="2"></th>
+      <th align="left">実績値</th>
+    </tr>
+    <tr>
+      <th align="left" colspan="3">利益</th>
+    </tr>
+    <% Zisseki::RIEKI_INPUT.each do |ip| %>
+      <%= render :partial => 'zedit_item', :locals => {:name => ip[0],
+      :form => f, :item => ip[1].to_sym} %>
+    <% end %>
+    <% Zisseki::RIEKI_VIEW.each do |vw| %>
+      <%= render :partial => 'zedit_view', :locals => {:name => vw[0],
+        :value => @zisseki.send(vw[1])} %>
+    <% end %>
+
+    <tr>
+      <th align="left" colspan="3">費用</th>
+    </tr>
+    <% Zisseki::HIYO_INPUT.each do |ip| %>
+      <%= render :partial => 'zedit_item', :locals => {:name => ip[0],
+      :form => f, :item => ip[1].to_sym} %>
+    <% end %>
+    <% Zisseki::HIYO_VIEW.each do |vw| %>
+      <%= render :partial => 'zedit_view', :locals => {:name => vw[0],
+        :value => @zisseki.send(vw[1])} %>
+    <% end %>
+
+    <tr>
+      <th align="left" colspan="3">営業利益</th>
+    </tr>
+    <% Zisseki::EIRI_INPUT.each do |ip| %>
+      <%= render :partial => 'zedit_item', :locals => {:name => ip[0],
+      :form => f, :item => ip[1].to_sym} %>
+    <% end %>
+    <% Zisseki::EIRI_VIEW.each do |vw| %>
+      <%= render :partial => 'zedit_view', :locals => {:name => vw[0],
+        :value => @zisseki.send(vw[1])} %>
+    <% end %>
+
+
+    <tr>
+      <th align="left" colspan="3">経常利益</th>
+    </tr>
+    <% Zisseki::KEIZYO_INPUT.each do |ip| %>
+      <%= render :partial => 'zedit_item', :locals => {:name => ip[0],
+      :form => f, :item => ip[1].to_sym} %>
+    <% end %>
+    <% Zisseki::KEIZYO_VIEW.each do |vw| %>
+      <%= render :partial => 'zedit_view', :locals => {:name => vw[0],
+        :value => @zisseki.send(vw[1])} %>
+    <% end %>
+
+  </table>
+
+  <p>
+    <%= f.submit '更新' %>
+  </p>
+
+<% end %>
+<hr>

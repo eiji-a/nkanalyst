@@ -1,0 +1,29 @@
+<div align="right">
+  <%= link_to '<font size="4"><b>一覧</b></font>', sitens_path %>
+</div>
+<hr>
+
+<% form_for(@siten) do |s| %>
+  <%= s.error_messages %>
+
+  <table width="100%">
+    <tr>
+      <th width="150px">支店名称</th>
+      <td><%= s.text_field :name, :size => 50 %></td>
+    </tr>
+    <tr>
+      <th>支店表示名</th>
+      <td><%= s.text_field :dispname, :size => 50 %></td>
+    </tr>
+    <tr>
+      <th>集計フラグ</th>
+      <td>
+        <%= s.radio_button :summary_flag, false, :checked => 'checked' %>支店
+        <%= s.radio_button :summary_flag, true %>集計
+      </td>
+    </tr>
+  </table>
+  <p>
+    <%= s.submit '作成' %>
+  </p>
+<% end %>

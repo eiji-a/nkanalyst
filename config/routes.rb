@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :sitens
+  map.resources :pl
+  map.resources :zissekis, :controller => :pl
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

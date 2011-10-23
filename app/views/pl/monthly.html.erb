@@ -1,0 +1,82 @@
+<div align="right">
+  <%= link_to '<font size="4"><b>前月</b></font>',
+    :action => :monthly, :id => @siten.id,
+    :month => Month.serial2month(@month.serial - 1) %>
+
+  <%= link_to '<font size="4"><b>次月</b></font>',
+    :action => :monthly, :id => @siten.id,
+    :month => Month.serial2month(@month.serial + 1) %>
+  /
+  <%= link_to '<font size="4"><b>前年度</b></font>',
+    :action => :monthly, :id => @siten.id,
+    :month => Month.serial2month(@month.serial - 12) %>
+
+  <%= link_to '<font size="4"><b>次年度</b></font>',
+    :action => :monthly, :id => @siten.id,
+    :month => Month.serial2month(@month.serial + 12) %>
+</div>
+<hr>
+
+<table width="100%" border="0">
+  <tr>
+    <th colspan="2"></th>
+    <th width="12%">
+      <%= link_to '昨年度実績', :id => @siten.id,
+        :month => Month.serial2month(@month.serial - 12) %>
+    </th>
+    <th width="12%">予算
+      <%= link_to (image_tag 'edit12.gif'), :action => :yedit,
+      :id => @siten.id, :month => @month.month %>
+    </th>
+    <th width="12%">経理実績
+      <%= link_to (image_tag 'edit12.gif'), :action => :kedit,
+      :id => @siten.id, :month => @month.month %>
+    </th>
+    <th width="12%">実績
+      <%= link_to (image_tag 'edit12.gif'), :action => :zedit,
+      :id => @siten.id, :month => @month.month %>
+    </th>
+    <th width="12%" colspan="2">昨年対比 (%)</th>
+    <th width="12%" colspan="2">予算対比 (%)</th>
+    <th width="12%" colspan="2">経理対比 (%)</th>
+  </tr>
+  <tr>
+    <th align="left" colspan="12">利益</th>
+  </tr>
+  <% (Zisseki::RIEKI_INPUT + Zisseki::RIEKI_VIEW).each do |ip| %>
+    <%= render :partial => 'monthly_item', :locals => {:name => ip[0],
+      :zennen => @zennen.send(ip[1]), :yosan => @yosan.send(ip[1]),
+      :keiri => @keiri.send(ip[1]), :zisseki => @zisseki.send(ip[1])} %>
+  <% end %>
+
+  <tr>
+    <th colspan="9" align="left">費用</th>
+  </tr>
+  <% (Zisseki::HIYO_INPUT + Zisseki::HIYO_VIEW).each do |ip| %>
+    <%= render :partial => 'monthly_item', :locals => {:name => ip[0],
+      :zennen => @zennen.send(ip[1]), :yosan => @yosan.send(ip[1]),
+      :keiri => @keiri.send(ip[1]), :zisseki => @zisseki.send(ip[1])} %>
+  <% end %>
+
+  <tr>
+    <th colspan="9", align="left">営業利益</th>
+  </tr>
+  <% (Zisseki::EIRI_INPUT + Zisseki::EIRI_VIEW).each do |ip| %>
+    <%= render :partial => 'monthly_item', :locals => {:name => ip[0],
+      :zennen => @zennen.send(ip[1]), :yosan => @yosan.send(ip[1]),
+      :keiri => @keiri.send(ip[1]), :zisseki => @zisseki.send(ip[1])} %>
+  <% end %>
+
+  <tr>
+    <th colspan="9", align="left">経常利益</th>
+  </tr>
+  <% (Zisseki::KEIZYO_INPUT + Zisseki::KEIZYO_VIEW).each do |ip| %>
+    <%= render :partial => 'monthly_item', :locals => {:name => ip[0],
+      :zennen => @zennen.send(ip[1]), :yosan => @yosan.send(ip[1]),
+      :keiri => @keiri.send(ip[1]), :zisseki => @zisseki.send(ip[1])} %>
+  <% end %>
+
+</table>
+<hr>
+
+

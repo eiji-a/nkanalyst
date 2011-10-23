@@ -1,0 +1,31 @@
+<tr>
+  <td width="5%"></td>
+  <td><%= name %></td>
+  <td align="right">
+    <%= number_to_currency(zennen, :precision => 0, :unit => '') %>
+  </td>
+  <td align="right">
+    <%= number_to_currency(yosan, :precision => 0, :unit => '') %>
+  </td>
+  <td align="right">
+    <%= number_to_currency(keiri, :precision => 0, :unit => '') %>
+  </td>
+  <td align="right">
+    <b><%= number_to_currency(zisseki, :precision => 0, :unit => '') %></b>
+  </td>
+  <td align="right">
+    <%= number_to_currency(zisseki - zennen, :precision => 0, :unit => '') %>
+  </td>
+  <% srate = sprintf("%.1f", zisseki * 100.0 / zennen) %>
+  <td align="right">(<%= srate %>)</td>
+  <td align="right">
+    <%= number_to_currency(zisseki - yosan, :precision => 0, :unit => '') %>
+  </td>
+  <% yrate = sprintf("%.1f", zisseki * 100.0 / yosan) %>
+  <td align="right">(<%= yrate %>)</td>
+  <td align="right">
+    <%= number_to_currency(zisseki - keiri, :precision => 0, :unit => '') %>
+  </td>
+  <% krate = sprintf("%.1f", zisseki * 100.0 / keiri) %>
+  <td align="right">(<%= krate %>)</td>
+</tr>

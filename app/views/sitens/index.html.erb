@@ -1,0 +1,33 @@
+<div align="right">
+  <%= link_to '<font size="4"><b>支店作成</b></font>', :action => :new %>
+</div>
+<hr>
+
+<table width="100%">
+  <tr>
+    <th width="40px">操作</th>
+    <th align="left">支店</th>
+    <th align="left">表示名</th>
+    <th align="left">集計フラグ</th>
+  </tr>
+
+<% @sitens.each do |siten| %>
+  <tr>
+    <td>
+      <%= link_to (image_tag 'edit12.gif'), siten, :method => :edit %>
+      <%= link_to (image_tag 'delete12.gif'), siten, :method => :delete %>
+    </td>
+    <td>
+      <%= siten.name %>
+    </td>
+    <td>
+      <%= siten.dispname %>
+    </td>
+    <td>
+      <%= if siten.summary_flag then '集計' else '実支店' end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
