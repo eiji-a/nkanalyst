@@ -13,7 +13,20 @@ class PlController < ApplicationController
     @zisseki = Zisseki.load(@month, @siten)
     @yosan   = Yosan.load(@month, @siten)
     @keiri   = Keiripl.load(@month, @siten)
-    @title = "#{@month.year}年度#{@month.mm}月度実績: #{@siten.dispname}"
+    @title = "#{@month.year}年#{@month.mm}月度実績: #{@siten.dispname}"
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def yearly
+    load_year_siten(params)
+    if @year == nil || @siten == nil
+    end
+    @zisseki = Zisseki.load_12months(@year, @siten)
+    @zyearly = Zisseki.load_yearly(@year, @siten)
+    @title = "#{@year}年度実績: #{@siten.dispname}"
 
     respond_to do |format|
       format.html
@@ -109,5 +122,10 @@ class PlController < ApplicationController
     begin
       @month = Month.load(params[:month])
     end
+  end
+
+  def load_year_siten(params)
+    @siten = Siten.find(params[:id])
+    @year = params[:year].to_i
   end
 end

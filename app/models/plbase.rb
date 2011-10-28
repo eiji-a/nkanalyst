@@ -34,7 +34,37 @@ module Plbase
                   ['雑損失', 'zatusonsitu'], ['消費税戻', 'syohizeimodori']]
   KEIZYO_VIEW  = [['経常利益', 'keizyorieki']]
 
-  # METHODS
+  INPUTS = RIEKI_INPUT + HIYO_INPUT + EIRI_INPUT + KEIZYO_INPUT
+  ITEM_SUMS = INPUTS.map {|i| "SUM(#{i[1]}) AS #{i[1]}"}.join(", ")
+
+  # CLASS METHODS
+
+=begin
+  def self.included(base)
+    base.extend Plbase
+    base.class_eval do
+      alias_method_chain :load, :load2
+      alias_method_chain :load_by_serial2, :load
+    end
+  end
+
+  def load2(month, siten)
+    val = self.class.find(:first,
+                     :conditions => ['month_id = ? AND siten_id = ?',
+                                     month.id, siten.id])
+    if val == nil
+      val = self.class.new
+      val.init(month, siten)
+    end
+    val
+  end
+
+  def load_by_serial
+
+  end
+=end
+
+  # INSTANCE METHODS
 
   def init(month, siten)
     month_id = month.id

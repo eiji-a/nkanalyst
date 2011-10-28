@@ -1,0 +1,12 @@
+<tr>
+  <td width="5%"></td>
+  <td><%= name %></td>
+  <% 12.times do |i| %>
+  <td align="right">
+    <%= number_to_currency(zisseki[i].send(param), :precision => 0, :unit => '') %>
+  </td>
+  <% end %>
+  <td align="right">
+    <%= number_to_currency(zyearly.send(param), :precision => 0, :unit => '') %>
+  </td>
+</tr>

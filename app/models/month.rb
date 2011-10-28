@@ -49,6 +49,19 @@ class Month < ActiveRecord::Base
     return mon
   end
 
+  def Month.load_by_serial(serial)
+    Month.load(serial2month(serial))
+  end
+
+  def Month.load_yearly(year)
+    mons = []
+    serial = year * 12 + 6
+    12.times do |i|
+      mons[i] = Month.load_by_serial(serial + i)
+    end
+    return mons
+  end
+
   # INSTANCE METHODS
 
   def save

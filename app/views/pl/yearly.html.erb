@@ -1,0 +1,61 @@
+<div align="right">
+  <%= link_to '<font size="4"><b>前年度</b></font>',
+    :action => :yearly, :id => @siten.id,
+    :year => (@year - 1) %>
+
+  <%= link_to '<font size="4"><b>次年度</b></font>',
+    :action => :yearly, :id => @siten.id,
+    :year => (@year + 1) %>
+</div>
+<hr>
+
+<table width="100%" border="0">
+  <tr>
+    <th colspan="2"></th>
+    <% 12.times do |i| %>
+    <% mon = (i + 6) % 12 + 1 %>
+    <% serial = @year * 12 + 6 %>
+    <th width="7%">
+      <%= link_to "#{mon}月", :id => @siten.id,
+        :action => 'monthly',
+        :month => Month.serial2month(serial + i) %>
+    </th>
+    <% end %>
+    <th width="7%">年度計</th>
+  </tr>
+  <tr>
+    <th align="left" colspan="12">利益</th>
+  </tr>
+  <% (Zisseki::RIEKI_INPUT + Zisseki::RIEKI_VIEW).each do |ip| %>
+    <%= render :partial => 'yearly_item', :locals => {:name => ip[0],
+      :param => ip[1], :zisseki => @zisseki, :zyearly => @zyearly} %>
+  <% end %>
+
+  <tr>
+    <th colspan="9" align="left">費用</th>
+  </tr>
+  <% (Zisseki::HIYO_INPUT + Zisseki::HIYO_VIEW).each do |ip| %>
+    <%= render :partial => 'yearly_item', :locals => {:name => ip[0],
+      :param => ip[1], :zisseki => @zisseki, :zyearly => @zyearly} %>
+  <% end %>
+
+  <tr>
+    <th colspan="9", align="left">営業利益</th>
+  </tr>
+  <% (Zisseki::EIRI_INPUT + Zisseki::EIRI_VIEW).each do |ip| %>
+    <%= render :partial => 'yearly_item', :locals => {:name => ip[0],
+      :param => ip[1], :zisseki => @zisseki, :zyearly => @zyearly} %>
+  <% end %>
+
+  <tr>
+    <th colspan="9", align="left">経常利益</th>
+  </tr>
+  <% (Zisseki::KEIZYO_INPUT + Zisseki::KEIZYO_VIEW).each do |ip| %>
+    <%= render :partial => 'yearly_item', :locals => {:name => ip[0],
+      :param => ip[1], :zisseki => @zisseki, :zyearly => @zyearly} %>
+  <% end %>
+
+</table>
+<hr>
+
+

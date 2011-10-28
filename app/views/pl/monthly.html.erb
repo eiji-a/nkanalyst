@@ -1,17 +1,19 @@
 <div align="right">
+  <%= link_to '<font size="4"><b>本年度</b></font>',
+    :action => :yearly, :id => @siten.id,
+    :year => @month.year %>
+  /
   <%= link_to '<font size="4"><b>前月</b></font>',
     :action => :monthly, :id => @siten.id,
     :month => Month.serial2month(@month.serial - 1) %>
-
   <%= link_to '<font size="4"><b>次月</b></font>',
     :action => :monthly, :id => @siten.id,
     :month => Month.serial2month(@month.serial + 1) %>
   /
-  <%= link_to '<font size="4"><b>前年度</b></font>',
+  <%= link_to '<font size="4"><b>前年同月</b></font>',
     :action => :monthly, :id => @siten.id,
     :month => Month.serial2month(@month.serial - 12) %>
-
-  <%= link_to '<font size="4"><b>次年度</b></font>',
+  <%= link_to '<font size="4"><b>次年同月</b></font>',
     :action => :monthly, :id => @siten.id,
     :month => Month.serial2month(@month.serial + 12) %>
 </div>
