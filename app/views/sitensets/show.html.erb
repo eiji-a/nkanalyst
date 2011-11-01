@@ -1,0 +1,26 @@
+<div align="right">
+  <%= link_to '<font size="4"><b>編集</b></font>', :action => :edit %>
+</div>
+<hr>
+
+<table width="100%">
+  <tr>
+    <th align="left">支店セット</th>
+    <th align="left">適用開始年月</th>
+  </tr>
+
+  <tr>
+    <td>
+      <%= @set.name %>
+    </td>
+    <td>
+      <%= @set.startmonth %>
+    </td>
+  </tr>
+</table>
+
+<hr>
+
+<b>支店一覧: <%= link_to '追加', :action => :new_detail, :id => @set.id %></b>
+
+<br />

@@ -2,7 +2,7 @@
 class SitensController < ApplicationController
   def index
     @sitens = Siten.find(:all)
-    @title = '支店管理: 一覧'
+    @title = '支店: 一覧'
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,7 +12,7 @@ class SitensController < ApplicationController
 
   def new
     @siten = Siten.new
-    @title = '支店管理: 新規作成'
+    @title = '支店: 新規作成'
 
     respond_to do |format|
       format.html
@@ -34,7 +34,7 @@ class SitensController < ApplicationController
 
   def edit
     @siten = Siten.new(params[:id])
-    @title = '支店管理: 更新(' + @siten.name + ')'
+    @title = '支店: 更新(' + @siten.name + ')'
     
     respond_to do |format|
       format.html

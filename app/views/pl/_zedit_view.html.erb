@@ -1,5 +1,7 @@
 <tr>
   <td></td>
   <td><%= name %></td>
-  <td><%= value %></td>
+  <td align="right">
+    <%= number_to_currency(value, :precision => 0, :unit => '') %>
+  </td>
 </tr>

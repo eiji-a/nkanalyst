@@ -1,0 +1,29 @@
+<div align="right">
+  <%= link_to '<font size="4"><b>支店セット作成</b></font>', :action => :new %>
+</div>
+<hr>
+
+<table width="100%">
+  <tr>
+    <th width="30px">操作</th>
+    <th align="left">支店セット</th>
+    <th align="left">適用開始年月</th>
+  </tr>
+
+<% @sets.each do |sset| %>
+  <tr>
+    <td>
+      <%= link_to (image_tag 'delete12.gif'),
+        :controller => :sitensets, :action => :delete, :id => sset.id %>
+    </td>
+    <td>
+      <%= link_to sset.name, :action => :show, :id => sset.id %>
+    </td>
+    <td>
+      <%= sset.startmonth %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />

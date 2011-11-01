@@ -1,0 +1,26 @@
+<div align="right">
+  <%= link_to '<font size="4"><b>戻る</b></font>', :action => :show, :id => @set.id %>
+</div>
+<hr>
+
+<% form_for(@detail, :url => {:action => :add_siten, :id => @set.id}) do |d| %>
+  <%= s.error_messages %>
+
+  <table width="100%">
+    <tr>
+      <th>順序</th>
+      <td><%= s.text_field :order, :size => 3 %></td>
+    </tr>
+    <tr>
+      <th width="150px">支店</th>
+      <td><%= s.text_field :siten_id, :size => 50 %></td>
+    </tr>
+    <tr>
+      <th>適用開始年月</th>
+      <td><%= s.text_field :startmonth, :size => 50 %></td>
+    </tr>
+  </table>
+  <p>
+    <%= s.submit '作成' %>
+  </p>
+<% end %>

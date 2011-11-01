@@ -1,0 +1,22 @@
+<div align="right">
+  <%= link_to '<font size="4"><b>一覧</b></font>', :action => :sets %>
+</div>
+<hr>
+
+<% form_for(@sitenset, :url => {:action => :create, :id => @sitenset.id}) do |s| %>
+  <%= s.error_messages %>
+
+  <table width="100%">
+    <tr>
+      <th width="150px">支店セット名称</th>
+      <td><%= s.text_field :name, :size => 50 %></td>
+    </tr>
+    <tr>
+      <th>適用開始年月</th>
+      <td><%= s.text_field :startmonth, :size => 50 %></td>
+    </tr>
+  </table>
+  <p>
+    <%= s.submit '作成' %>
+  </p>
+<% end %>
