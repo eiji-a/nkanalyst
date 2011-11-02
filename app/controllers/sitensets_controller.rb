@@ -43,7 +43,7 @@ class SitensetsController < ApplicationController
     end
   end
 
-  def new_detail
+  def add_detail
     @set = SitenSet.find(params[:id])
     @detail = SitenSetDetail.new
 

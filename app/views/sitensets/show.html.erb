@@ -21,6 +21,24 @@
 
 <hr>
 
-<b>支店一覧: <%= link_to '追加', :action => :new_detail, :id => @set.id %></b>
+<b>支店一覧:
+
+<table width="100%">
+  <tr>
+    <th>順序</th>
+    <th>支店</th>
+    <th>範囲</th>
+  </tr>
+  <% @set.details.each do |d| %>
+  <tr>
+    <td><%= d.order %></td>
+    <td><%= d.siten.name %></td>
+    <td><%= d.range_start %> 〜 <%= d.range_end %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+ <%= link_to '追加', :action => :new_detail, :id => @set.id %></b>
 
 <br />
