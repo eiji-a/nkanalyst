@@ -3,42 +3,61 @@
 </div>
 <hr>
 
+<b>支店セット情報:</b>
+
+<p>
 <table width="100%">
   <tr>
-    <th align="left">支店セット</th>
-    <th align="left">適用開始年月</th>
-  </tr>
-
-  <tr>
+    <th align="left" width="100px">支店セット</th>
     <td>
       <%= @set.name %>
     </td>
+  </tr>
+  <tr>
+    <th align="left">適用開始年月</th>
     <td>
       <%= @set.startmonth %>
     </td>
   </tr>
 </table>
+</p>
 
-<hr>
+<p>
+<b>支店一覧:</b>
 
-<b>支店一覧:
-
+<% form_for(@detail, :url => {:action => :add_detail, :id => @set.id}) do |f| %>
 <table width="100%">
   <tr>
-    <th>順序</th>
-    <th>支店</th>
-    <th>範囲</th>
+    <th width="30px">操作</th>
+    <th align="left" width="70px">順序</th>
+    <th align="left" width="250px">支店</th>
+    <th align="left">範囲</th>
   </tr>
   <% @set.details.each do |d| %>
   <tr>
-    <td><%= d.order %></td>
+    <td>
+      <%= link_to (image_tag 'edit12.gif'), :action => :edit_detail,
+        :id => @set.id, :siten_set_detail_id => d.id %>
+      <%= link_to (image_tag 'delete12.gif'), :action => :del_detail,
+        :id => @set.id, :siten_set_detail_id => d.id %>
+    </td>
+    <td><%= d.sequence %></td>
     <td><%= d.siten.name %></td>
     <td><%= d.range_start %> 〜 <%= d.range_end %></td>
   </tr>
   <% end %>
+
+  <tr>
+    <td></td>
+    <td><%= f.text_field :sequence, :size => 5 %></td>
+    <td><%= f.collection_select :siten_id, @sitens, :id, :name %></td>
+    <td>
+      <%= f.text_field :range_start, :size => 5 %> 〜
+      <%= f.text_field :range_end, :size => 5 %>
+    </td>
+  </tr>
 </table>
 
-
- <%= link_to '追加', :action => :new_detail, :id => @set.id %></b>
-
-<br />
+  <%= f.submit '追加' %>
+<% end %>
+</p>

@@ -15,6 +15,8 @@ class SitensetsController < ApplicationController
   def show
     @set = SitenSet.find(params[:id])
     @title = '支店セット: 詳細'
+    @detail = SitenSetDetail.new
+    @sitens = Siten.find(:all)
 
     respond_to do |format|
       format.html
@@ -36,19 +38,25 @@ class SitensetsController < ApplicationController
     respond_to do |format|
       if @set.save
         flash[:notice] = "支店セット [#{@set.name}] が作成されました"
-        format.html { redirect_to(:action => 'index') }
+        format.html { redirect_to(:action => :index) }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => :new }
       end
     end
   end
 
   def add_detail
     @set = SitenSet.find(params[:id])
-    @detail = SitenSetDetail.new
+    @detail = SitenSetDetail.new(params[:siten_set_detail])
+    @detail.siten_set = @set
 
     respond_to do |format|
-      format.html
+      if @detail.save
+        flash[:notice] = "支店セット詳細 [#{@detail.sequence}]が追加されました"
+        format.html { redirect_to(:action => :show, :id => @set.id) }
+      else
+        format.html { render :action => :show }
+      end
     end
   end
 

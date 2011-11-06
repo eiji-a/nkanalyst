@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111101134438) do
+ActiveRecord::Schema.define(:version => 20111104234642) do
 
   create_table "keiripls", :force => true do |t|
     t.integer  "month_id",                         :null => false
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20111101134438) do
   create_table "siten_set_details", :force => true do |t|
     t.integer  "siten_id",     :null => false
     t.integer  "siten_set_id", :null => false
-    t.integer  "order",        :null => false
+    t.integer  "sequence",     :null => false
     t.integer  "range_start"
     t.integer  "range_end"
     t.datetime "created_at"

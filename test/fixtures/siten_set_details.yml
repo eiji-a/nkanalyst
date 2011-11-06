@@ -3,13 +3,13 @@
 one:
   siten_id: 1
   siten_set_id: 1
-  order: 1
+  sequence: 1
   range_start: 1
   range_end: 1
 
 two:
   siten_id: 1
   siten_set_id: 1
-  order: 1
+  sequence: 1
   range_start: 1
   range_end: 1

@@ -17,6 +17,25 @@ class Zisseki < ActiveRecord::Base
     zi
   end
 
+  def Zisseki.load_total(month, siten)
+    sels = []
+    INPUTS.each do |i|
+      sels << "SUM(#{i[1]}) AS #{i[1]}"
+    end
+    sql = <<-SQL
+      SELECT siten_id,
+             #{sels.join(", ")}
+        FROM zissekis
+       WHERE month_id IN ()
+    SQL
+    zi = Zisseki.find_by_sql([sql, {}])
+    if zi == nil
+      zi = Zisseki.new
+      zi.init(month, siten)
+    end
+    zi
+  end
+
   def Zisseki.load_12months(year, siten)
     mons = Month.load_yearly(year)
     ye = []
