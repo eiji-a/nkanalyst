@@ -9,29 +9,41 @@
   <%= stylesheet_link_tag 'nkanalyst' %>
 </head>
 <body>
-  <table width="100%" border="0">
-    <tr>
-      <td width="320px" rowspan="3"><%= image_tag 'nk_title.gif' %></td>
-      <td align="right">
-        <%= link_to '今年度実績', :controller => :pl %>
-        <%= link_to '支店メンテ', :controller => :sitens %>
-        <b>ログアウト</b>
-      </td>
-    </tr>
-    <tr>
-      <td align="right">
-      </td>
-    </tr>
-    <tr>
-      <td align="right" valign="bottom">
-        <font size="5"><b><%= title %></b></font>
-      </td>
-    </tr>
-  </table>
-
-  <div id="main">
-    <%= yield %>
+  <div id="page">
+    <div id="header">
+      <table width="100%" border="0">
+        <tr>
+          <td width="320px" rowspan="3"><%= image_tag 'nk_title.gif' %></td>
+          <td align="right">
+            <b>ログアウト</b>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">
+          </td>
+        </tr>
+        <tr>
+          <td align="right" valign="bottom">
+            <font size="5"><b><%= title %></b></font>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div id="body">
+      <div id="menu">
+        <% year = (Month.month2serial(Time.now.strftime("%Y%m").to_i) / 100) %>
+        <%= link_to '今年度実績', :controller => :pl, :action => :yearly,
+          :id => 1, :year => year %><br />
+        <%= link_to '支店メンテ', :controller => :sitens %><br />
+        <%= link_to '支店セットメンテ', :controller => :sitensets %><br />
+      </div>
+      <div id="main">
+        <%= yield %>
+      </div>
+    </div>
+    <div id="footer">
+      ニッケン文具 (c)
+    </div>
   </div>
-
 </body>
 </html>

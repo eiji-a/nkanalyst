@@ -9,10 +9,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104234642) do
+ActiveRecord::Schema.define(:version => 20111107130835) do
 
   create_table "keiripls", :force => true do |t|
-    t.integer  "month_id",                         :null => false
+    t.integer  "month",                            :null => false
     t.integer  "siten_id",                         :null => false
     t.integer  "uriage",            :default => 0
     t.integer  "siire",             :default => 0
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20111104234642) do
   end
 
   create_table "yosans", :force => true do |t|
-    t.integer  "month_id",                         :null => false
+    t.integer  "month",                            :null => false
     t.integer  "siten_id",                         :null => false
     t.integer  "uriage",            :default => 0
     t.integer  "siire",             :default => 0
@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(:version => 20111104234642) do
   end
 
   create_table "zissekis", :force => true do |t|
-    t.integer  "month_id",                         :null => false
+    t.integer  "month",                            :null => false
     t.integer  "siten_id",                         :null => false
     t.integer  "uriage",            :default => 0
     t.integer  "siire",             :default => 0

@@ -66,8 +66,10 @@ module Plbase
 
   # INSTANCE METHODS
 
-  def init(month, siten)
-    month_id = month.id
+  def init(serial, siten)
+    return unless Month.valid?(serial)
+
+    month = serial
     siten_id = siten.id
 
     uriage = 0

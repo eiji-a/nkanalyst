@@ -1,13 +1,13 @@
 <div align="right">
   <%= link_to '<font size="4"><b>戻る</b></font>',
-    :action => :monthly, :id => @siten.id, :month => @month.month %>
+    :action => :monthly, :id => @siten.id, :month => @serial %>
 </div>
 <hr>
 
 <% form_for(@keiri, :url => {:action => :kupdate, :id => @siten.id}) do |f| %>
   <%= f.error_messages %>
   <%= f.hidden_field :siten_id, :value => @siten.id %>
-  <%= f.hidden_field :month_id, :value => @month.id %>
+  <%= f.hidden_field :month, :value => @serial %>
 
   <p>
     <%= f.submit '更新' %>

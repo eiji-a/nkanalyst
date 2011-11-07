@@ -12,13 +12,12 @@
 <table width="100%" border="0">
   <tr>
     <th colspan="2"></th>
-    <% 12.times do |i| %>
-    <% mon = (i + 6) % 12 + 1 %>
+    <% 1.upto(12) do |i| %>
     <% serial = @year * 12 + 6 %>
     <th width="7%">
-      <%= link_to "#{mon}月", :id => @siten.id,
+      <%= link_to "#{Month.to_month(i)}月", :id => @siten.id,
         :action => 'monthly',
-        :month => Month.serial2month(serial + i) %>
+        :month => Month.ym2serial(@year, i) %>
     </th>
     <% end %>
     <th width="7%">年度計</th>
