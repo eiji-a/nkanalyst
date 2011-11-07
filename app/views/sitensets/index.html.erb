@@ -13,14 +13,15 @@
 <% @sets.each do |sset| %>
   <tr>
     <td>
-      <%= link_to (image_tag 'delete12.gif'),
-        :controller => :sitensets, :action => :delete, :id => sset.id %>
+      <%= link_to (image_tag 'edit12.gif'), :action => :edit, :id => sset.id %>
+      <%= link_to (image_tag 'delete12.gif'), :action => :delete, :id => sset.id %>
     </td>
     <td>
       <%= link_to sset.name, :action => :show, :id => sset.id %>
     </td>
     <td>
-      <%= sset.startmonth %>
+      <% y, m = Month.yyyy_mm(sset.startmonth) %>
+      <%= y.to_s + '年' + m.to_s + '月' %>
     </td>
   </tr>
 <% end %>

@@ -3,7 +3,7 @@
 </div>
 <hr>
 
-<b>支店セット情報:</b>
+<b>支店セット情報: </b>
 
 <p>
 <table width="100%">
@@ -16,7 +16,8 @@
   <tr>
     <th align="left">適用開始年月</th>
     <td>
-      <%= @set.startmonth %>
+      <% y, m = Month.yyyy_mm(@set.startmonth) %>
+      <%= y.to_s + '年' + m.to_s + '月' %>
     </td>
   </tr>
 </table>

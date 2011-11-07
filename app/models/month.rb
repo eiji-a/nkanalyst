@@ -11,13 +11,55 @@ class Month < ActiveRecord::Base
 
   def Month.month2serial(month)
     y, m = split_month(month)
-    y * 12 + (m - 1)
+    if m <= 6
+      y += 1
+    end
+    m = (m + 5) % 12 + 1
+    y * 100 + m
   end
 
   def Month.serial2month(serial)
-    m = serial % 12 + 1
-    y = serial / 12
-    return y * 100 + m
+    y, m = split_month(serial)
+    if m >= 7
+      y += 1
+    end
+    m = (m + 5) % 12 + 1
+    y * 100 + m
+  end
+
+  def Month.yyyy_mm(serial)
+    y, m = split_month(serial)
+    if m >= 7
+      y += 1
+    end
+    m = (m + 5) % 12 + 1
+    return y, m
+  end
+
+  def Month.year(serial)
+    serial / 100
+  end
+
+  def Month.prev(serial)
+    serial - 1
+  end
+
+  def Month.next(serial)
+    serial + 1
+  end
+
+  def Month.prev_year(serial)
+    y, m = split_month(serial)
+    (y - 1) * 100 + m
+  end
+
+  def Month.last_year(serial)
+    prev_year(serial)
+  end
+
+  def Month.next_year(serial)
+    y, m = split_month(serial)
+    (y + 1) * 100 + m
   end
 
   def Month.month2order(month)

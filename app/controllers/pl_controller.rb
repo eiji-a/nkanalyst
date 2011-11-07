@@ -5,15 +5,16 @@ class PlController < ApplicationController
 
   def monthly
     load_month_siten(params)
-    if @month == nil || @siten == nil
+    if @siten == nil
 
     end
-    lmon = @month.last_year
-    @zennen  = Zisseki.load(lmon, @siten)
-    @zisseki = Zisseki.load(@month, @siten)
-    @yosan   = Yosan.load(@month, @siten)
-    @keiri   = Keiripl.load(@month, @siten)
-    @title = "#{@month.year}年#{@month.mm}月度実績: #{@siten.dispname}"
+
+    @zennen  = Zisseki.load(Month.last_year(@serial), @siten)
+    @zisseki = Zisseki.load(@serial, @siten)
+    @yosan   = Yosan.load(@serial, @siten)
+    @keiri   = Keiripl.load(@serial, @siten)
+    y, m = Month.yyyy_mm(@serial)
+    @title = "#{y}年#{m}月度実績: #{@siten.dispname}"
 
     respond_to do |format|
       format.html
@@ -118,10 +119,7 @@ class PlController < ApplicationController
 
   def load_month_siten(params)
     @siten = Siten.find(params[:id])
-    @month = nil
-    begin
-      @month = Month.load(params[:month])
-    end
+    @serial = params[:month].to_i
   end
 
   def load_year_siten(params)
