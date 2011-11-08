@@ -7,4 +7,9 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+
+  def init(serial)
+    set = SitenSet.find(:first, :condition => ['month <= ?', serial],
+                        :order => 'month desc');
+  end
 end

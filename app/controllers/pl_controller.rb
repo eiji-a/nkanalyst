@@ -38,7 +38,8 @@ class PlController < ApplicationController
   def zedit
     load_month_siten(params)
     @zisseki = Zisseki.load(@month, @siten)
-    @title = "[更新] #{@month.year}年度#{@month.mm}月度実績: #{@siten.dispname}"
+    y, m = Month.yyyy_mm(@serial)
+    @title = "[更新] #{y}年度#{m}月度実績: #{@siten.dispname}"
 
     respond_to do |format|
       format.html
@@ -47,7 +48,7 @@ class PlController < ApplicationController
 
   def zupdate
     m = Month.find(params[:zisseki][:month_id])
-    pr = {:id => params[:zisseki][:siten_id], :month => m.month}
+    pr = {:id => params[:zisseki][:siten_id], :month => params[:zisseki][:month]}
     load_month_siten(pr)
     @zisseki = Zisseki.load(@month, @siten)
     respond_to do |format|

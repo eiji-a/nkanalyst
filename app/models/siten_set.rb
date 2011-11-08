@@ -25,7 +25,7 @@ class SitenSet < ActiveRecord::Base
                                   :flag  => false}])
   end
 
-  def SitenSet.get_range(month, siten)
+  def SitenSet.get_range(serial, siten)
     return nil if siten.summary_flag == Siten::REAL
     sql = <<-SQL
       SELECT st.*,
@@ -33,11 +33,11 @@ class SitenSet < ActiveRecord::Base
         FROM siten_sets as st, siten_set_details as dt
        WHERE dt.siten_id = :siten_id
          AND dt.siten_set_id = st.id
-         AND st.startmonth <= :month
+         AND st.startmonth <= :serial
        ORDER BY st.startmonth DESC
     SQL
     set = SitenSet.find_by_sql([sql, {:siten_id => siten.id,
-                                  :month => month.month}])
+                               :serial => serial])
     return nil if set.size == 0
     set[0].range_start = set[0].range_start.to_i
     set[0].range_end   = set[0].range_end.to_i
