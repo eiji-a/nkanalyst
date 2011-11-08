@@ -1,0 +1,70 @@
+@media all {
+
+a:link {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: bold;
+}
+
+a:hover {
+    color: #907040;
+    background: #ffffff;
+    text-decoration: underline;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+div#page {
+    margin: 0;
+    padding: 0;
+}
+
+div#header {
+    font-size: 110%;
+    font-family: "Trebuchet MS";
+    color: #227;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+div#body {
+    margin: 0;
+    padding: 0;
+}
+
+div#menu {
+    float: left;
+    width: 150px;
+    margin: 5px 0 0 5px;
+    padding: 0;
+}
+
+div#main {
+    margin-left: 155px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    padding: 0;
+    width: 725px;
+}
+
+div#footer {
+    text-align: center;
+    border-top: 5px solid #227;
+    margin: 0;
+    padding: 0;
+}
+
+}
