@@ -86,4 +86,28 @@ class SitensetsController < ApplicationController
     end
   end
 
+  def edit_detail
+    @set = SitenSet.find(params[:id])
+    @sitens = Siten.find(:all)
+    @detail = SitenSetDetail.find(params[:siten_set_detail_id])
+    @title = '支店セット: 詳細更新'
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def update_detail
+    @set = SitenSet.find(params[:id])
+    @detail = SitenSetDetail.find(params[:siten_set_detail][:id])
+
+    respond_to do |format|
+      if @detail.update_attributes(params[:siten_set_detail])
+        flash[:notice] = "支店セット詳細 [#{@detail.sequence}]が更新されました"
+        format.html { redirect_to(:action => :show, :id => @set.id) }
+      else
+        format.html { render :action => :show }
+      end
+    end
+  end
 end

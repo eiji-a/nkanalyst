@@ -1,5 +1,7 @@
-
-<%= link_to '戻る', :action => :monthly, :id => @siten.id, :month => @serial %>
+<div align="right">
+  <%= link_to '<font size="4"><b>戻る</b></font>',
+    :action => :monthly, :id => @siten.id, :month => @serial %>
+</div>
 <hr>
 
 <% form_for(@zisseki, :url => {:action => :zupdate, :id => @siten.id}) do |f| %>
@@ -11,10 +13,10 @@
     <%= f.submit '更新' %>
   </p>
 
-  <table width="100%">
+  <table width="400px">
     <tr>
       <th colspan="2"></th>
-      <th align="left">実績値</th>
+      <th align="right">実績値</th>
     </tr>
     <tr>
       <th align="left" colspan="3">利益</th>

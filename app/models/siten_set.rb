@@ -36,8 +36,8 @@ class SitenSet < ActiveRecord::Base
          AND st.startmonth <= :serial
        ORDER BY st.startmonth DESC
     SQL
-    set = SitenSet.find_by_sql([sql, {:siten_id => siten.id,
-                               :serial => serial])
+    set = SitenSet.find_by_sql([sql,
+                                {:siten_id => siten.id, :serial => serial}])
     return nil if set.size == 0
     set[0].range_start = set[0].range_start.to_i
     set[0].range_end   = set[0].range_end.to_i
