@@ -5,13 +5,13 @@ class Keiripl < ActiveRecord::Base
 
   # CLASS METHODS
 
-  def self.load(month, siten)
+  def self.load(serial, siten)
     pl = Keiripl.find(:first,
-                   :conditions => ['month_id = ? AND siten_id = ?',
-                                   month.id, siten.id])
+                   :conditions => ['month = ? AND siten_id = ?',
+                                   serial, siten.id])
     if pl == nil
       pl = Keiripl.new
-      pl.init(month, siten)
+      pl.init(serial, siten)
     end
     pl
   end

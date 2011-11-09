@@ -14,8 +14,15 @@ class Month < ActiveRecord::Base
     if m <= 6
       y -= 1
     end
-    m = (m + 5) % 12 + 1
-    to_serial(y, m)
+    ym2serial(y, to_month(m))
+  end
+
+  def Month.serial2month(serial)
+    y, m = split_month(serial)
+    if m >= 7
+      y += 1
+    end
+    ym2serial(y, to_month(m))
   end
 
   def Month.yyyy_mm(serial)
@@ -23,39 +30,52 @@ class Month < ActiveRecord::Base
     if m >= 7
       y += 1
     end
-    m = (m + 5) % 12 + 1
-    return y, m
+    return y, to_month(m)
   end
 
   def Month.year(serial)
-    y = serial / 100
+    serial / 100
   end
 
   def Month.prev(serial)
     y, m = split_month(serial)
     if m == 1
-      y -= 1
-      m = 12
+      ym2serial(y - 1, 12)
+    else
+      serial - 1
     end
-    to_serial(y, m)
   end
 
   def Month.next(serial)
     y, m = split_month(serial)
     if m == 12
-      y += 1
-      m = 1
+      ym2serial(y + 1, 1)
+    else
+      serial + 1
     end
-    to_serial(y, m)
-  end    
+  end
+
+  def Month.prev_year(serial)
+    y, m = split_month(serial)
+    ym2serial(y - 1, m)
+  end
+
+  def Month.last_year(serial)
+    prev_year(serial)
+  end
+
+  def Month.next_year(serial)
+    y, m = split_month(serial)
+    ym2serial(y + 1, m)
+  end
 
   def Month.valid?(serial)
     begin
       split_month(serial)
     rescue
-      return false
+      false
     end
-    return true
+    true
   end
 
   def Month.first_month(serial)
@@ -68,26 +88,28 @@ class Month < ActiveRecord::Base
     to_serial(y, 12)
   end
 
-  def Month.prev_year(serial)
-    y, m = split_month(serial)
-    to_serial(y - 1, m)
-  end
-
-  def Month.next_year(serial)
-    y, m = split_month(serial)
-    to_serial(y + 1, m)
-  end
-
   def Month.to_serial(year, month)
     year * 100 + month
   end
 
-  def Month.split_month(month)
-    raise ArgumentError, "invalid type: #{month}" if month.class != Fixnum
-    m = month % 100
-    raise ArgumentError, "invalid month: #{month}" if m < 1 || 12 < m
-    y = month / 100
-    raise ArgumentError, "invalid year: #{month}" if y < 1900 || 2100 < y
+  def Month.ym2serial(year, month)
+    year * 100 + month
+  end
+
+  def Month.to_month(month)
+    (month + 5) % 12 + 1
+  end
+
+  def Month.to_serial(month)
+    (month - 5) % 12 + 1
+  end
+
+  def Month.split_month(serial)
+    raise ArgumentError, "invalid type: #{serial}" if serial.class != Fixnum
+    m = serial % 100
+    raise ArgumentError, "invalid month: #{serial}" if m < 1 || 12 < m
+    y = serial / 100
+    raise ArgumentError, "invalid year: #{serial}" if y < 1900 || 2100 < y
     return y, m
   end
 

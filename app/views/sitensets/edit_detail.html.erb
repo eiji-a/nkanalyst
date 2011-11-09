@@ -26,7 +26,8 @@
 <p>
 <b>支店一覧:</b>
 
-<% form_for(@detail, :url => {:action => :add_detail, :id => @set.id}) do |f| %>
+<% form_for(@detail, :url => {:action => :update_detail, :id => @set.id}) do |f| %>
+<%= f.hidden_field :id, :value => @detail.id %>
 <table width="100%">
   <tr>
     <th width="30px">操作</th>
@@ -36,6 +37,15 @@
   </tr>
   <% @set.details.each do |d| %>
   <tr>
+    <% if d.id == @detail.id %>
+    <td><%= f.submit '更新' %></td>
+    <td><%= f.text_field :sequence, :size => 5 %></td>
+    <td><%= f.collection_select :siten_id, @sitens, :id, :name %></td>
+    <td>
+      <%= f.text_field :range_start, :size => 5 %> 〜
+      <%= f.text_field :range_end, :size => 5 %>
+    </td>
+    <% else %>
     <td>
       <%= link_to (image_tag 'edit12.gif'), :action => :edit_detail,
         :id => @set.id, :siten_set_detail_id => d.id %>
@@ -46,20 +56,13 @@
     <td><%= d.sequence %></td>
     <td><%= d.siten.name %></td>
     <td><%= d.range_start %> 〜 <%= d.range_end %></td>
+    <% end %>
   </tr>
   <% end %>
 
   <tr>
-    <td></td>
-    <td><%= f.text_field :sequence, :size => 5 %></td>
-    <td><%= f.collection_select :siten_id, @sitens, :id, :name %></td>
-    <td>
-      <%= f.text_field :range_start, :size => 5 %> 〜
-      <%= f.text_field :range_end, :size => 5 %>
-    </td>
   </tr>
 </table>
 
-  <%= f.submit '追加' %>
 <% end %>
 </p>

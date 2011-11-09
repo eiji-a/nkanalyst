@@ -14,8 +14,8 @@
 <% @sitens.each do |siten| %>
   <tr>
     <td>
-      <%= link_to (image_tag 'edit12.gif'), siten, :action => :edit, :id => siten.id %>
-      <%= link_to (image_tag 'delete12.gif'), siten, :action => :delete, :id => siten.id %>
+      <%= link_to (image_tag 'edit12.gif'), :action => :edit, :id => siten.id %>
+      <%= link_to (image_tag 'delete12.gif'), :action => :delete, :id => siten.id %>
     </td>
     <td>
       <%= siten.name %>

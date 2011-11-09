@@ -5,15 +5,16 @@ class PlController < ApplicationController
 
   def monthly
     load_month_siten(params)
-    if @month == nil || @siten == nil
+    if @siten == nil
 
     end
-    lmon = @month.last_year
-    @zennen  = Zisseki.load(lmon, @siten)
-    @zisseki = Zisseki.load(@month, @siten)
-    @yosan   = Yosan.load(@month, @siten)
-    @keiri   = Keiripl.load(@month, @siten)
-    @title = "#{@month.year}年#{@month.mm}月度実績: #{@siten.dispname}"
+
+    @zennen  = Zisseki.load(Month.last_year(@serial), @siten)
+    @zisseki = Zisseki.load(@serial, @siten)
+    @yosan   = Yosan.load(@serial, @siten)
+    @keiri   = Keiripl.load(@serial, @siten)
+    y, m = Month.yyyy_mm(@serial)
+    @title = "#{y}年#{m}月度実績: #{@siten.dispname}"
 
     respond_to do |format|
       format.html
@@ -37,7 +38,8 @@ class PlController < ApplicationController
   def zedit
     load_month_siten(params)
     @zisseki = Zisseki.load(@month, @siten)
-    @title = "[更新] #{@month.year}年度#{@month.mm}月度実績: #{@siten.dispname}"
+    y, m = Month.yyyy_mm(@serial)
+    @title = "[更新] #{y}年度#{m}月度実績: #{@siten.dispname}"
 
     respond_to do |format|
       format.html
@@ -46,7 +48,7 @@ class PlController < ApplicationController
 
   def zupdate
     m = Month.find(params[:zisseki][:month_id])
-    pr = {:id => params[:zisseki][:siten_id], :month => m.month}
+    pr = {:id => params[:zisseki][:siten_id], :month => params[:zisseki][:month]}
     load_month_siten(pr)
     @zisseki = Zisseki.load(@month, @siten)
     respond_to do |format|
@@ -63,8 +65,9 @@ class PlController < ApplicationController
   # 予算更新
   def yedit
     load_month_siten(params)
-    @yosan = Yosan.load(@month, @siten)
-    @title = "[更新] #{@month.year}年度#{@month.mm}月度予算: #{@siten.dispname}"
+    @yosan = Yosan.load(@serial, @siten)
+    y, m = Month.yyyy_mm(@serial)
+    @title = "[更新] #{y}年度#{m}月度予算: #{@siten.dispname}"
 
     respond_to do |format|
       format.html
@@ -72,15 +75,14 @@ class PlController < ApplicationController
   end
 
   def yupdate
-    m = Month.find(params[:yosan][:month_id])
-    pr = {:id => params[:yosan][:siten_id], :month => m.month}
+    pr = {:id => params[:yosan][:siten_id], :month => params[:yosan][:month]}
     load_month_siten(pr)
-    @yosan = Yosan.load(@month, @siten)
+    @yosan = Yosan.load(@serial, @siten)
     respond_to do |format|
       if @yosan.update_attributes(params[:yosan])
         flash[:notice] = "予算が更新されました"
         format.html { redirect_to(:action => 'monthly', :id => @siten.id,
-                                  :month => @month.month) }
+                                  :month => @serial) }
       else
         format.html { render :action => "yedit" }
       end
@@ -90,8 +92,9 @@ class PlController < ApplicationController
   # 経理更新
   def kedit
     load_month_siten(params)
-    @keiri = Keiripl.load(@month, @siten)
-    @title = "[更新] #{@month.year}年度#{@month.mm}月度経理: #{@siten.dispname}"
+    @keiri = Keiripl.load(@serial, @siten)
+    y, m = Month.yyyy_mm(@serial)
+    @title = "[更新] #{y}年度#{m}月度経理: #{@siten.dispname}"
 
     respond_to do |format|
       format.html
@@ -99,15 +102,14 @@ class PlController < ApplicationController
   end
 
   def kupdate
-    m = Month.find(params[:keiripl][:month_id])
-    pr = {:id => params[:keiripl][:siten_id], :month => m.month}
+    pr = {:id => params[:keiripl][:siten_id], :month => params[:keiripl][:month]}
     load_month_siten(pr)
-    @keiri = Keiripl.load(@month, @siten)
+    @keiri = Keiripl.load(@serial, @siten)
     respond_to do |format|
       if @keiri.update_attributes(params[:keiripl])
         flash[:notice] = "予算が更新されました"
         format.html { redirect_to(:action => 'monthly', :id => @siten.id,
-                                  :month => @month.month) }
+                                  :month => @serial) }
       else
         format.html { render :action => "kedit" }
       end
@@ -118,10 +120,7 @@ class PlController < ApplicationController
 
   def load_month_siten(params)
     @siten = Siten.find(params[:id])
-    @month = nil
-    begin
-      @month = Month.load(params[:month])
-    end
+    @serial = params[:month].to_i
   end
 
   def load_year_siten(params)

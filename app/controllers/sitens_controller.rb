@@ -33,11 +33,24 @@ class SitensController < ApplicationController
   end
 
   def edit
-    @siten = Siten.new(params[:id])
+    @siten = Siten.find(params[:id])
     @title = '支店: 更新(' + @siten.name + ')'
     
     respond_to do |format|
       format.html
+    end
+  end
+
+  def update
+    @siten = Siten.find(params[:id])
+
+    respond_to do |format|
+      if @siten.update_attributes(params[:siten])
+        flash[:notice] = "支店 [#{@siten.name}] が更新されました"
+        format.html { redirect_to(:action => 'index') }
+      else
+        format.html { render :action => "new" }
+      end
     end
   end
 
