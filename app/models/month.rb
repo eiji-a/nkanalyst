@@ -11,23 +11,75 @@ class Month < ActiveRecord::Base
 
   def Month.month2serial(month)
     y, m = split_month(month)
-    y * 12 + (m - 1)
+    if m <= 6
+      y -= 1
+    end
+    m = (m + 5) % 12 + 1
+    to_serial(y, m)
   end
 
-  def Month.serial2month(serial)
-    m = serial % 12 + 1
-    y = serial / 12
-    return y * 100 + m
+  def Month.yyyy_mm(serial)
+    y, m = split_month(serial)
+    if m >= 7
+      y += 1
+    end
+    m = (m + 5) % 12 + 1
+    return y, m
   end
 
-  def Month.month2order(month)
-    y, m = split_month(month)
-    if m <= 6 then m + 6 else m - 6 end
+  def Month.year(serial)
+    y = serial / 100
   end
 
-  def Month.month2year(month)
-    y, m = split_month(month)
-    if m <= 6 then y + 1 else y end
+  def Month.prev(serial)
+    y, m = split_month(serial)
+    if m == 1
+      y -= 1
+      m = 12
+    end
+    to_serial(y, m)
+  end
+
+  def Month.next(serial)
+    y, m = split_month(serial)
+    if m == 12
+      y += 1
+      m = 1
+    end
+    to_serial(y, m)
+  end    
+
+  def Month.valid?(serial)
+    begin
+      split_month(serial)
+    rescue
+      return false
+    end
+    return true
+  end
+
+  def Month.first_month(serial)
+    y, m = split_month(serial)
+    to_serial(y, 1)
+  end
+
+  def Month.last_month(serial)
+    y, m = split_month(serial)
+    to_serial(y, 12)
+  end
+
+  def Month.prev_year(serial)
+    y, m = split_month(serial)
+    to_serial(y - 1, m)
+  end
+
+  def Month.next_year(serial)
+    y, m = split_month(serial)
+    to_serial(y + 1, m)
+  end
+
+  def Month.to_serial(year, month)
+    year * 100 + month
   end
 
   def Month.split_month(month)
@@ -35,7 +87,7 @@ class Month < ActiveRecord::Base
     m = month % 100
     raise ArgumentError, "invalid month: #{month}" if m < 1 || 12 < m
     y = month / 100
-    raise ArgumentError, "invalid year: #{month}" if y < 2000 || 2100 < y
+    raise ArgumentError, "invalid year: #{month}" if y < 1900 || 2100 < y
     return y, m
   end
 
