@@ -14,18 +14,15 @@
       <table width="100%" border="0">
         <tr>
           <td width="320px" rowspan="3"><%= image_tag 'nk_title.gif' %></td>
+	  <td width="250px" rowspan="3" valign="bottom" align="right">
+	    <%= @title %>
+	  </td>
           <td align="right">
             <b>ログアウト</b>
           </td>
         </tr>
         <tr>
-          <td align="right">
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="bottom">
-            <font size="5"><b><%= title %></b></font>
-          </td>
+          <td align="right" valign="bottom"></td>
         </tr>
       </table>
     </div>
@@ -33,16 +30,24 @@
       <div id="menu">
         <p>
           <% year = (Month.month2serial(Time.now.strftime("%Y%m").to_i) / 100) %>
-          <%= link_to '今年度実績', :controller => :pl, :action => :yearly,
-            :id => 1, :year => year %><br />
-          <%= link_to '支店メンテ', :controller => :sitens %><br />
-          <%= link_to '支店セットメンテ', :controller => :sitensets %><br />
+	  <span class="menu_line">
+            <%= link_to '今年度実績', :controller => :pl, :action => :yearly,
+              :id => 1, :year => year %><br />
+	  </span>
+	  <span class="menu_line">
+            <%= link_to '支店メンテ', :controller => :sitens %><br />
+	  </span>
+	  <span class="menu_line">
+            <%= link_to '支店セットメンテ', :controller => :sitensets %><br />
+	  </span>
         </p>
         <p>
+	  <% if @menu_set != nil %>
           <% @menu_set.details.each do |d| %>
           <%= link_to d.siten.dispname, :controller => :pl,
             :action => :monthly, :id => d.siten.id, :month => @serial %><br />
           <% end %>
+	  <% end %>
         </p>
       </div>
       <div id="main">

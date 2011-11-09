@@ -67,4 +67,10 @@ div#footer {
     padding: 0;
 }
 
+span.menu_line {
+    color: red;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
 }

@@ -55,6 +55,21 @@ class SitensController < ApplicationController
   end
 
   def delete
+    @siten = Siten.find(params[:id])
+    if @siten.siten_set_details.size > 0 ||
+       @siten.zissekis.size > 0 ||
+       @siten.yosans.size > 0 ||
+       @siten.keiripls.size > 0
+      flash[:error] = "支店 [#{@siten.name}]は使用されているため削除できません。"
+    else
+      @siten.destroy
+      flash[:notice] = "支店 [#{@siten.name}]は削除されました"
+    end
+
+    respond_to do |format|
+      format.html {redirect_to (:action => 'index')}
+    end
+
   end
 
 end
