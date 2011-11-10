@@ -1,19 +1,21 @@
-<div align="right">
-  <%= link_to '<font size="4"><b>本年度</b></font>',
+<div align="right" class="page_menu">
+  <%= link_to '年度実績',
     :action => :yearly, :id => @siten.id,
     :year => Month.year(@serial) %>
-  /
-  <%= link_to '<font size="4"><b>前月</b></font>',
+  |
+  <%= link_to '前月',
     :action => :monthly, :id => @siten.id,
     :month => Month.prev(@serial) %>
-  <%= link_to '<font size="4"><b>次月</b></font>',
+  /
+  <%= link_to '次月',
     :action => :monthly, :id => @siten.id,
     :month => Month.next(@serial) %>
-  /
-  <%= link_to '<font size="4"><b>前年同月</b></font>',
+  |
+  <%= link_to '前年同月',
     :action => :monthly, :id => @siten.id,
     :month => Month.prev_year(@serial) %>
-  <%= link_to '<font size="4"><b>次年同月</b></font>',
+  /
+  <%= link_to '次年同月',
     :action => :monthly, :id => @siten.id,
     :month => Month.next_year(@serial) %>
 </div>
@@ -24,7 +26,7 @@
     <th colspan="2"></th>
     <th width="12%">
       <%= link_to '昨年度実績', :id => @siten.id,
-        :month => Month.prev(@serial) %>
+        :month => Month.prev_year(@serial) %>
     </th>
     <th width="12%">予算
       <%= link_to (image_tag 'edit12.gif'), :action => :yedit,

@@ -6,39 +6,34 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <% title = if @title != nil then @title else controller.action_name end %>
   <title>NK Analyst: <%= title %></title>
-  <%= stylesheet_link_tag 'nkanalyst' %>
+  <%= stylesheet_link_tag 'nkanalyst', :media => 'all' %>
 </head>
 <body>
   <div id="page">
     <div id="header">
       <table width="100%" border="0">
         <tr>
-          <td width="320px" rowspan="3"><%= image_tag 'nk_title.gif' %></td>
-	  <td width="250px" rowspan="3" valign="bottom" align="right">
-	    <%= @title %>
+          <td width="320px" rowspan="2"><%= image_tag 'nk_title.gif' %></td>
+	  <td width="250px" rowspan="2" valign="bottom" align="right">
+	    <span class="title"><%= @title %></span>
 	  </td>
-          <td align="right">
-            <b>ログアウト</b>
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="bottom"></td>
         </tr>
       </table>
     </div>
     <div id="body">
       <div id="menu">
         <p>
+          <span class="menu_line">ログアウト</span><br />
           <% year = (Month.month2serial(Time.now.strftime("%Y%m").to_i) / 100) %>
 	  <span class="menu_line">
             <%= link_to '今年度実績', :controller => :pl, :action => :yearly,
               :id => 1, :year => year %><br />
 	  </span>
 	  <span class="menu_line">
-            <%= link_to '支店メンテ', :controller => :sitens %><br />
+            <%= link_to '支店管理', :controller => :sitens %><br />
 	  </span>
 	  <span class="menu_line">
-            <%= link_to '支店セットメンテ', :controller => :sitensets %><br />
+            <%= link_to '支店セット管理', :controller => :sitensets %><br />
 	  </span>
         </p>
         <p>
