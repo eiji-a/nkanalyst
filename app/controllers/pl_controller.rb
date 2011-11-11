@@ -47,15 +47,14 @@ class PlController < ApplicationController
   end
 
   def zupdate
-    m = Month.find(params[:zisseki][:month_id])
     pr = {:id => params[:zisseki][:siten_id], :month => params[:zisseki][:month]}
     load_month_siten(pr)
-    @zisseki = Zisseki.load(@month, @siten)
+    @zisseki = Zisseki.load(@serial, @siten)
     respond_to do |format|
       if @zisseki.update_attributes(params[:zisseki])
         flash[:notice] = "実績が更新されました"
         format.html { redirect_to(:action => 'monthly', :id => @siten.id,
-                                  :month => @month.month) }
+                                  :month => @serial) }
       else
         format.html { render :action => "zedit" }
       end

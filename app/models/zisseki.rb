@@ -7,9 +7,27 @@ class Zisseki < ActiveRecord::Base
   # CLASS METHODS
 
   def Zisseki.load(serial, siten)
-    zi = Zisseki.find(:first,
-                      :conditions => ['month = ? AND siten_id = ?',
-                                      serial, siten.id])
+    zi = nil
+    if siten.summary_flag == Siten::REAL
+      zi = Zisseki.find(:first,
+                        :conditions => ['month = ? AND siten_id = ?',
+                                        serial, siten.id])
+    else
+      sitens = SitenSet.summarized_by(serial, siten).map {|s| s.id}
+      sql = <<-SQL
+        SELECT month,
+               #{ITEM_SUMS}
+          FROM zissekis
+         WHERE month = :serial
+           AND siten_id IN (:sitens)
+      SQL
+      z0 = Zisseki.find_by_sql([sql, {:serial => serial, :sitens => sitens}])
+      if z0.size > 0 and z0[0].month != nil
+        zi = z0[0]
+        zi.id = siten.id
+      end
+    end
+
     if zi == nil
       zi = Zisseki.new
       zi.init(serial, siten)
@@ -24,7 +42,7 @@ class Zisseki < ActiveRecord::Base
     end
     sql = <<-SQL
       SELECT siten_id,
-             #{sels.join(", ")}
+             #{ITEM_SUMS}
         FROM zissekis
        WHERE month_id IN ()
     SQL

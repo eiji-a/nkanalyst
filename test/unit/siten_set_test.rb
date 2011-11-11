@@ -67,8 +67,8 @@ class SitenSetTest < ActiveSupport::TestCase
     tt1.save
     tt2.save
     tt3.save
-    set1 = SitenSet.new({:name => '201012-', :startmonth => 201012})
-    set2 = SitenSet.new({:name => '201107-', :startmonth => 201107})
+    set1 = SitenSet.new({:name => '201012-', :startmonth => 201006})
+    set2 = SitenSet.new({:name => '201107-', :startmonth => 201101})
     set1.save
     set2.save
     dt1 = SitenSetDetail.new({:sequence => 101})
@@ -132,26 +132,26 @@ class SitenSetTest < ActiveSupport::TestCase
     assert_equal dt12.save, true
     assert_equal dt13.save, true
     
-    mon1 = Month.load(201102)
-    set = SitenSet.get_range(mon1, tt1)
+    serial1 = Month.month2serial(201102)
+    set = SitenSet.get_range(serial1, tt1)
     assert_equal set.id, set1.id
     assert_equal set.range_start, 100
     assert_equal set.range_end, 149
 
-    mon2 = Month.load(201112)
-    set = SitenSet.get_range(mon2, tt3)
+    serial2 = Month.month2serial(201112)
+    set = SitenSet.get_range(serial2, tt3)
     assert_equal set.id, set2.id
     assert_equal set.range_start, 200
     assert_equal set.range_end, 299
 
-    sitens = SitenSet.summarized_by(mon2, tt2)
+    sitens = SitenSet.summarized_by(serial2, tt2)
     assert_equal sitens.size, 4
     assert_equal sitens[0].id, st1.id
     assert_equal sitens[1].id, st2.id
     assert_equal sitens[2].id, st5.id
     assert_equal sitens[3].id, st6.id
 
-    sitens = SitenSet.summarized_by(mon1, tt1)
+    sitens = SitenSet.summarized_by(serial1, tt1)
     assert_equal sitens.size, 3
     assert_equal sitens[0].id, st1.id
     assert_equal sitens[1].id, st2.id

@@ -6,9 +6,15 @@ class Yosan < ActiveRecord::Base
   # CLASS METHODS
 
   def self.load(serial, siten)
-    pl = Yosan.find(:first,
-                   :conditions => ['month = ? AND siten_id = ?',
-                                   serial, siten.id])
+    pl = nil
+    if siten.summary_flag == Siten::REAL
+      pl = Yosan.find(:first,
+                      :conditions => ['month = ? AND siten_id = ?',
+                                      serial, siten.id])
+    else
+      pl = nil
+    end
+
     if pl == nil
       pl = Yosan.new
       pl.init(serial, siten)

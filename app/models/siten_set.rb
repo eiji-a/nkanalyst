@@ -6,8 +6,10 @@ class SitenSet < ActiveRecord::Base
   has_many :details, :class_name => 'SitenSetDetail', :order => 'sequence'
 
   # CLASS METHODS
-  def SitenSet.summarized_by(month, siten)
-    range = get_range(month, siten)
+  def SitenSet.summarized_by(serial, siten)
+    range = get_range(serial, siten)
+    return nil if range == nil
+
     sql = <<-SQL
       SELECT si.*
         FROM sitens as si, siten_sets as st, siten_set_details as dt
@@ -22,7 +24,7 @@ class SitenSet < ActiveRecord::Base
     sitens = Siten.find_by_sql([sql, {:set_id => range.id,
                                   :start => range.range_start,
                                   :end   => range.range_end,
-                                  :flag  => false}])
+                                  :flag  => Siten::REAL}])
   end
 
   def SitenSet.get_range(serial, siten)
