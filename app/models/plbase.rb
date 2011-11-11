@@ -39,6 +39,65 @@ module Plbase
 
   # CLASS METHODS
 
+  def self.load(klass, serial, siten)
+    pl = nil
+    if siten.summary_flag == Siten::REAL
+      pl = klass.find(:first,
+                      :conditions => ['month = ? AND siten_id = ?',
+                                      serial, siten.id])
+    else
+      sitens = SitenSet.summarized_by(serial, siten)
+      sids = if sitens != nil then sitens.map {|s| s.id} else [] end
+      table = klass.name.tableize
+      sql = <<-SQL
+        SELECT month,
+               #{ITEM_SUMS}
+          FROM #{table}
+         WHERE month = :serial
+           AND siten_id IN (:sitens)
+      SQL
+      p0 = klass.find_by_sql([sql, {:serial => serial, :sitens => sids}])
+      if p0.size > 0 and p0[0].month != nil
+        pl = p0[0]
+        pl.id = siten.id
+      end
+    end
+
+    if pl == nil
+      pl = klass.new
+      pl.init(serial, siten)
+    end
+    pl
+  end
+
+  def self.load_12months(klass, year, siten)
+    ye = []
+    1.upto(12) do |m|
+      ye << load(klass, Month.ym2serial(year, m), siten)
+    end
+    return ye
+  end
+
+  def self.load_yearly(klass, year, siten)
+    mstart = Month.ym2serial(year, 1)
+    mend   = Month.ym2serial(year, 12)
+    table = klass.name.tableize
+    sql = <<-SQL
+      SELECT siten_id,
+             #{ITEM_SUMS}
+        FROM #{table}
+       WHERE siten_id = ?
+         AND (month >= ? AND month <= ?)
+       GROUP BY siten_id
+    SQL
+    pl = klass.find_by_sql([sql, siten.id, mstart, mend])[0]
+    if pl == nil
+      pl = klass.new
+      pl.init(year, siten)
+    end
+    pl
+  end
+
 =begin
   def self.included(base)
     base.extend Plbase

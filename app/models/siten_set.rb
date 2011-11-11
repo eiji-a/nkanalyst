@@ -24,7 +24,9 @@ class SitenSet < ActiveRecord::Base
     sitens = Siten.find_by_sql([sql, {:set_id => range.id,
                                   :start => range.range_start,
                                   :end   => range.range_end,
-                                  :flag  => Siten::REAL}])
+                                  :flag  => 0}])
+    puts "SITENS: #{sitens}"
+    sitens
   end
 
   def SitenSet.get_range(serial, siten)

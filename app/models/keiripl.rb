@@ -6,20 +6,7 @@ class Keiripl < ActiveRecord::Base
   # CLASS METHODS
 
   def self.load(serial, siten)
-    pl = nil
-    if siten.summary_flag == Siten::REAL
-      pl = Keiripl.find(:first,
-                        :conditions => ['month = ? AND siten_id = ?',
-                                        serial, siten.id])
-    else
-      pl = nil
-    end
-
-    if pl == nil
-      pl = Keiripl.new
-      pl.init(serial, siten)
-    end
-    pl
+    Plbase.load(Keiripl, serial, siten)
   end
 
   # INSTANCE METHODS
