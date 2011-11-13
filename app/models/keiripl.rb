@@ -8,7 +8,11 @@ class Keiripl < ActiveRecord::Base
   def self.load(serial, siten)
     Plbase.load(Keiripl, serial, siten)
   end
+ 
+  def self.load_cumulative(serial, siten)
+    Plbase.load_cumulative(Keiripl, serial, siten)
+  end
 
-  # INSTANCE METHODS
+ # INSTANCE METHODS
 
 end

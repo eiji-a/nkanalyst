@@ -9,6 +9,10 @@ class Yosan < ActiveRecord::Base
     Plbase.load(Yosan, serial, siten)
   end
 
+  def self.load_cumulative(serial, siten)
+    Plbase.load_cumulative(Yosan, serial, siten)
+  end
+
   # INSTANCE METHODS
 
 end

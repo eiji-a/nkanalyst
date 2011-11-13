@@ -100,9 +100,11 @@ class Month < ActiveRecord::Base
     (month + 5) % 12 + 1
   end
 
+=begin
   def Month.to_serial(month)
     (month - 5) % 12 + 1
   end
+=end
 
   def Month.split_month(serial)
     raise ArgumentError, "invalid type: #{serial}" if serial.class != Fixnum

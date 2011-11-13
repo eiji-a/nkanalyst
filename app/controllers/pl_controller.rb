@@ -4,15 +4,14 @@ class PlController < ApplicationController
   
 
   def monthly
-    load_month_siten(params)
+    load_siten(params)
     if @siten == nil
 
     end
 
-    @zennen  = Zisseki.load(Month.last_year(@serial), @siten)
-    @zisseki = Zisseki.load(@serial, @siten)
-    @yosan   = Yosan.load(@serial, @siten)
-    @keiri   = Keiripl.load(@serial, @siten)
+    load_month(@serial, @siten)
+    @uriage = @zisseki.uriage
+    @curiage = @czisseki.uriage
     y, m = Month.yyyy_mm(@serial)
     @title = "#{y}年#{m}月度実績: #{@siten.dispname}"
 
@@ -33,10 +32,33 @@ class PlController < ApplicationController
       format.html
     end
   end
+=begin
+  def analysys
+    load_siten(params)
+    if @siten == nil
+
+    end
+    load_month(serial, siten)
+    @yzisseki = Zisseki.load_12months(@year, @siten)
+    @yyearly  = Zisseki.load_yearly(@year, @siten)
+    @
+  end
+=end
+
+  def load_month(serial, siten)
+    @zennen  = Zisseki.load(Month.last_year(serial), siten)
+    @zisseki = Zisseki.load(serial, siten)
+    @yosan   = Yosan.load(serial, siten)
+    @keiri   = Keiripl.load(serial, siten)
+    @czennen  = Zisseki.load_cumulative(Month.last_year(serial), siten)
+    @czisseki = Zisseki.load_cumulative(serial, siten)
+    @cyosan   = Yosan.load_cumulative(serial, siten)
+    @ckeiri   = Keiripl.load_cumulative(serial, siten)
+  end
 
   # 実績更新
   def zedit
-    load_month_siten(params)
+    load_siten(params)
     @zisseki = Zisseki.load(@month, @siten)
     y, m = Month.yyyy_mm(@serial)
     @title = "[更新] #{y}年度#{m}月度実績: #{@siten.dispname}"
@@ -48,7 +70,7 @@ class PlController < ApplicationController
 
   def zupdate
     pr = {:id => params[:zisseki][:siten_id], :month => params[:zisseki][:month]}
-    load_month_siten(pr)
+    load_siten(pr)
     @zisseki = Zisseki.load(@serial, @siten)
     respond_to do |format|
       if @zisseki.update_attributes(params[:zisseki])
@@ -63,7 +85,7 @@ class PlController < ApplicationController
 
   # 予算更新
   def yedit
-    load_month_siten(params)
+    load_siten(params)
     @yosan = Yosan.load(@serial, @siten)
     y, m = Month.yyyy_mm(@serial)
     @title = "[更新] #{y}年度#{m}月度予算: #{@siten.dispname}"
@@ -75,7 +97,7 @@ class PlController < ApplicationController
 
   def yupdate
     pr = {:id => params[:yosan][:siten_id], :month => params[:yosan][:month]}
-    load_month_siten(pr)
+    load_siten(pr)
     @yosan = Yosan.load(@serial, @siten)
     respond_to do |format|
       if @yosan.update_attributes(params[:yosan])
@@ -90,7 +112,7 @@ class PlController < ApplicationController
 
   # 経理更新
   def kedit
-    load_month_siten(params)
+    load_siten(params)
     @keiri = Keiripl.load(@serial, @siten)
     y, m = Month.yyyy_mm(@serial)
     @title = "[更新] #{y}年度#{m}月度経理: #{@siten.dispname}"
@@ -102,7 +124,7 @@ class PlController < ApplicationController
 
   def kupdate
     pr = {:id => params[:keiripl][:siten_id], :month => params[:keiripl][:month]}
-    load_month_siten(pr)
+    load_siten(pr)
     @keiri = Keiripl.load(@serial, @siten)
     respond_to do |format|
       if @keiri.update_attributes(params[:keiripl])
@@ -117,13 +139,9 @@ class PlController < ApplicationController
 
 :private
 
-  def load_month_siten(params)
+  def load_siten(params)
     @siten = Siten.find(params[:id])
-    @serial = params[:month].to_i
-  end
-
-  def load_year_siten(params)
-    @siten = Siten.find(params[:id])
-    @year = params[:year].to_i
+    @serial = params[:month].to_i if params[:month] != nil
+    @year = params[:year].to_i if params[:year] != nil
   end
 end

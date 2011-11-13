@@ -10,6 +10,10 @@ class Zisseki < ActiveRecord::Base
     Plbase.load(Zisseki, serial, siten)
   end
 
+  def self.load_cumulative(serial, siten)
+    Plbase.load_cumulative(Zisseki, serial, siten)
+  end
+
   def self.load_total(serial, siten)
     sels = []
     INPUTS.each do |i|

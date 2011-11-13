@@ -5,10 +5,10 @@ module Plbase
 
   # CONSTANTS
   RIEKI_INPUT = [['売上', 'uriage'], ['仕入', 'siire'],
-                 ['支店間', 'sitenkan'], ['期首在庫', 'kisyu'],
-                 ['期末在庫', 'kimatu']]
-  RIEKI_VIEW  = [['在庫増減', 'zogen'], ['原価', 'genka'],
-                ['粗利', 'arari']]
+                 ['支店間', 'sitenkan'],
+                 ['期首在庫', 'kisyu'], ['期末在庫', 'kimatu']]
+  RIEKI_VIEW  = [['在庫増減', 'zogen'], ['仕入計', 'siirekei'],
+                 ['原価', 'genka'], ['粗利', 'arari']]
 
   HIYO_INPUT = [['給料', 'kyuryo'], ['賞与', 'syoyo'],
                 ['退職', 'taisyoku'], ['法定', 'hotei'],
@@ -66,6 +66,38 @@ module Plbase
     if pl == nil
       pl = klass.new
       pl.init(serial, siten)
+    end
+    pl
+  end
+
+  def self.load_cumulative(klass, serial, siten)
+    pl = nil
+    table = klass.name.tableize
+    if siten.summary_flag == Siten::REAL
+      sql = <<-SQL
+        SELECT month,
+               #{ITEM_SUMS}
+          FROM #{table}
+         WHERE month >= :mstart
+           AND month <= :mend
+           AND siten_id = :siten_id
+      SQL
+      p0 = klass.find_by_sql([sql,
+                              {:siten_id => siten.id,
+                               :mstart => Month.first_month(serial),
+                               :mend => serial}])
+      if p0.size > 0 and p0[0].month != nil
+        pl = p0[0]
+      end
+    else
+
+    end
+
+    if pl == nil
+      pl = klass.new
+      pl.init(serial, siten)
+    else
+      pl.id = siten.id
     end
     pl
   end
@@ -181,6 +213,11 @@ module Plbase
   def zogen
     @zogen = kimatu - kisyu if @zogen == nil
     return @zogen
+  end
+
+  def siirekei
+    @siirekei = siire + sitenkan if @siirekei == nil
+    return @siirekei
   end
 
   def genka
