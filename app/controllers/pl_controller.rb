@@ -13,7 +13,7 @@ class PlController < ApplicationController
     @uriage = @zisseki.uriage
     @curiage = @czisseki.uriage
     y, m = Month.yyyy_mm(@serial)
-    @title = "#{y}年#{m}月度実績: #{@siten.dispname}"
+    @title = "#{y}年#{m}月度実績: #{@siten.name}"
 
     respond_to do |format|
       format.html
@@ -26,7 +26,7 @@ class PlController < ApplicationController
     end
     @zisseki = Zisseki.load_12months(@year, @siten)
     @zyearly = Zisseki.load_yearly(@year, @siten)
-    @title = "#{@year}年度実績: #{@siten.dispname}"
+    @title = "#{@year}年度実績: #{@siten.name}"
 
     respond_to do |format|
       format.html
@@ -61,7 +61,7 @@ class PlController < ApplicationController
     load_siten(params)
     @zisseki = Zisseki.load(@month, @siten)
     y, m = Month.yyyy_mm(@serial)
-    @title = "[更新] #{y}年度#{m}月度実績: #{@siten.dispname}"
+    @title = "[更新] #{y}年度#{m}月度実績: #{@siten.name}"
 
     respond_to do |format|
       format.html
@@ -88,7 +88,7 @@ class PlController < ApplicationController
     load_siten(params)
     @yosan = Yosan.load(@serial, @siten)
     y, m = Month.yyyy_mm(@serial)
-    @title = "[更新] #{y}年度#{m}月度予算: #{@siten.dispname}"
+    @title = "[更新] #{y}年度#{m}月度予算: #{@siten.name}"
 
     respond_to do |format|
       format.html
@@ -115,7 +115,7 @@ class PlController < ApplicationController
     load_siten(params)
     @keiri = Keiripl.load(@serial, @siten)
     y, m = Month.yyyy_mm(@serial)
-    @title = "[更新] #{y}年度#{m}月度経理: #{@siten.dispname}"
+    @title = "[更新] #{y}年度#{m}月度経理: #{@siten.name}"
 
     respond_to do |format|
       format.html

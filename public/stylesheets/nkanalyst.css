@@ -45,14 +45,11 @@ div#body {
 }
 
 div#menu {
-    float: left;
-    width: 150px;
     margin: 5px 0 0 5px;
     padding: 0;
 }
 
 div#main {
-    margin-left: 155px;
     margin-top: 0;
     margin-right: 0;
     margin-bottom: 0;
@@ -61,6 +58,7 @@ div#main {
 
 div#footer {
     text-align: center;
+    font-weight: bold;
     border-top: 5px solid #227;
     margin: 0;
     padding: 0;
