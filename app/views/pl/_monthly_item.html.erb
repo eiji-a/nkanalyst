@@ -5,84 +5,76 @@
   <!-- [Ã±·î] -->
   <!-- ºòÇ¯¼ÂÀÓ -->
   <td align="right">
-    <%= number_to_currency(zennen, :precision => 0, :unit => '') %>
+    <%= nknumber(zennen) %>
   </td>
   <!-- Í½»» -->
   <td align="right">
-    <%= number_to_currency(yosan, :precision => 0, :unit => '') %>
+    <%= nknumber(yosan) %>
   </td>
   <!-- ¼ÂÀÓ -->
   <td align="right">
-    <b><%= number_to_currency(zisseki, :precision => 0, :unit => '') %></b>
+    <b><%= nknumber(zisseki) %></b>
   </td>
   <!-- ¼ÂÇäÎ¨ -->
-  <% brate = sprintf("%.1f", zisseki * 100.0 / uriage) %>
-  <td align="right"><%= brate %></td>
+  <td align="right"><%= nkrate(zisseki, uriage) %></td>
   <!-- ºòÇ¯ÂÐÈæ -->
   <td align="right">
-    <%= number_to_currency(zisseki - zennen, :precision => 0, :unit => '') %>
+    <%= nknumber(zisseki - zennen) %>
   </td>
   <!-- ºòÂÐÎ¨ -->
-  <% srate = sprintf("%.1f", zisseki * 100.0 / zennen) %>
-  <td align="right"><%= srate %></td>
+  <td align="right"><%= nkrate(zisseki, zennen) %></td>
   <!-- Í½»»ÂÐÈæ -->
   <td align="right">
-    <%= number_to_currency(zisseki - yosan, :precision => 0, :unit => '') %>
+    <%= nknumber(zisseki - yosan) %>
   </td>
   <!-- ÌÜÉ¸Î¨ -->
-  <% yrate = sprintf("%.1f", zisseki * 100.0 / yosan) %>
-  <td align="right"><%= yrate %></td>
+  <td align="right"><%= nkrate(zisseki, yosan) %></td>
   <!-- ·ÐÍý -->
   <td align="right">
-    <%= number_to_currency(keiri, :precision => 0, :unit => '') %>
+    <%= nknumber(keiri) %>
   </td>
   <!-- ·ÐÍýº¹³Û -->
   <td align="right">
-    <%= number_to_currency(zisseki - keiri, :precision => 0, :unit => '') %>
+    <%= nknumber(zisseki - keiri) %>
   </td>
   <!-- ·ÐÍýÂÐÈæ -->
-  <% krate = sprintf("%.1f", zisseki * 100.0 / keiri) %>
-  <td align="right"><%= krate %></td>
+  <td align="right"><%= nkrate(zisseki, keiri) %></td>
 
   <!-- [Îß·×] -->
   <!-- ºòÇ¯¼ÂÀÓ -->
   <td align="right">
-    <%= number_to_currency(czennen, :precision => 0, :unit => '') %>
+    <%= nknumber(czennen) %>
   </td>
   <!-- Í½»» -->
   <td align="right">
-    <%= number_to_currency(cyosan, :precision => 0, :unit => '') %>
+    <%= nknumber(cyosan) %>
   </td>
   <!-- ¼ÂÀÓ -->
   <td align="right">
-    <b><%= number_to_currency(czisseki, :precision => 0, :unit => '') %></b>
+    <b><%= nknumber(czisseki) %></b>
   </td>
   <!-- ¼ÂÇäÎ¨ -->
-  <% brate = sprintf("%.1f", czisseki * 100.0 / curiage) %>
-  <td align="right"><%= brate %></td>
+  <td align="right"><%= nkrate(czisseki, curiage) %></td>
   <!-- ºòÇ¯ÂÐÈæ -->
   <td align="right">
-    <%= number_to_currency(czisseki - czennen, :precision => 0, :unit => '') %>
+    <%= nknumber(czisseki - czennen) %>
   </td>
   <!-- ºòÂÐÎ¨ -->
-  <% srate = sprintf("%.1f", czisseki * 100.0 / czennen) %>
-  <td align="right"><%= srate %></td>
+  <td align="right"><%= nkrate(czisseki, czennen) %></td>
   <!-- Í½»»ÂÐÈæ -->
   <td align="right">
-    <%= number_to_currency(czisseki - cyosan, :precision => 0, :unit => '') %>
+    <%= nknumber(czisseki - cyosan) %>
   </td>
   <!-- ÌÜÉ¸Î¨ -->
-  <% yrate = sprintf("%.1f", czisseki * 100.0 / cyosan) %>
-  <td align="right"><%= yrate %></td>
+  <td align="right"><%= nkrate(czisseki, cyosan) %></td>
   <!-- ·ÐÍý -->
   <td align="right">
-    <%= number_to_currency(ckeiri, :precision => 0, :unit => '') %>
+    <%= nknumber(ckeiri) %>
   </td>
   <!-- ·ÐÍýº¹³Û -->
   <td align="right">
-    <%= number_to_currency(czisseki - ckeiri, :precision => 0, :unit => '') %>
+    <%= nknumber(czisseki - ckeiri) %>
   </td>
   <!-- ·ÐÍýÂÐÈæ -->
-  <% krate = sprintf("%.1f", czisseki * 100.0 / ckeiri) %>
-  <td align="right"><%= krate %></td>
+  <td align="right"><%= nkrate(czisseki, ckeiri) %></td>
 </tr>

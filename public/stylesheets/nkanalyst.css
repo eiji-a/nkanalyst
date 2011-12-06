@@ -80,4 +80,25 @@ span.title {
     font-weight: bold;
 }
 
+table.monthly {
+    border-collapse: collapse;
+    border: 0px;
+}
+
+td.nknumber {
+    text-align: right;
+}
+
+td.nkrate {
+    text-align: right;
+}
+
+span.num_plus {
+    color: black;
+}
+
+span.num_minus {
+    color: red;
+}
+
 }

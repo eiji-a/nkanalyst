@@ -1,0 +1,16 @@
+<tr>
+  <th rowspan="3"><%= month %></th>
+  <th>前期</th>
+  <%= render :partial => 'analysis_items', :locals => {:data => zennen,
+    :ruikei => zenruikei}%>
+</tr>
+<tr>
+  <th>目標</th>
+  <%= render :partial => 'analysis_items', :locals => {:data => yosan,
+    :ruikei => yoruikei}%>
+</tr>
+<tr>
+  <th>当期</th>
+  <%= render :partial => 'analysis_items', :locals => {:data => zisseki,
+    :ruikei => ziruikei}%>
+</tr>

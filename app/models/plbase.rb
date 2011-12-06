@@ -90,7 +90,23 @@ module Plbase
         pl = p0[0]
       end
     else
-
+      sitens = SitenSet.summarized_by(serial, siten)
+      sids = if sitens != nil then sitens.map {|s| s.id} else [] end
+      sql = <<-SQL
+        SELECT month,
+               #{ITEM_SUMS}
+          FROM #{table}
+         WHERE month >= :mstart
+           AND month <= :mend
+           AND siten_id IN (:sitens)
+      SQL
+      p0 = klass.find_by_sql([sql,
+                              {:mstart => Month.first_month(serial),
+                               :mend => serial, :sitens => sids}])
+      if p0.size > 0 and p0[0].month != nil
+        pl = p0[0]
+        pl.id = siten.id
+      end
     end
 
     if pl == nil

@@ -1,0 +1,63 @@
+<div align="right" class="page_menu">
+
+</div>
+<hr>
+
+<table width="100%" class="monthly">
+  <tr>
+    <th colspan="2"></th>
+    <th colspan="13" align="left"><span class="tangetu">単月</span></th>
+    <th colspan="13" align="left"><span class="ruikei">累計</span></th>
+  </tr>
+  <tr>
+    <th colspan="2">月</th>
+  <!--- 単月 --->
+    <th>売上</th>
+    <th>仕入</th>
+    <th>支間</th>
+    <th>期首</th>
+    <th>期末</th>
+    <th>増減</th>
+    <th>粗利</th>
+    <th>粗利%</th>
+    <th>経費</th>
+    <th>経費%</th>
+    <th>雑収入</th>
+    <th>営業利</th>
+    <th>営利計</th>
+  <!--- 累計 --->
+    <th>売上</th>
+    <th>仕入</th>
+    <th>支間</th>
+    <th>期首</th>
+    <th>期末</th>
+    <th>増減</th>
+    <th>粗利</th>
+    <th>粗利%</th>
+    <th>経費</th>
+    <th>経費%</th>
+    <th>雑収入</th>
+    <th>営業利</th>
+    <th>営利計</th>
+  </tr>
+  <% if @zennen.size > 0 %>
+  <% serial = Month.first_month(@serial) %>
+  <% zenruikei = 0 %>
+  <% yoruikei = 0 %>
+  <% ziruikei = 0 %>
+  <% 12.times do |i| %>
+  <%   yy, mm = Month.yyyy_mm(serial + i) %>
+  <%   zenruikei += @zennen[i].eigyorieki %>
+  <%   yoruikei += @yosan[i].eigyorieki %>
+  <%   ziruikei += @zisseki[i].eigyorieki %>
+  <%= render :partial => 'analysis', :locals => {:month => mm, 
+    :zennen => @zennen[i], :yosan => @yosan[i],
+    :keiri => @keiri[i], :zisseki => @zisseki[i],
+    :zenruikei => zenruikei, :yoruikei => yoruikei, :ziruikei => ziruikei} %>
+  <% end %>
+  <% end %>
+  <tr>
+    <th colspan="14" align="left"><%= @month %>月累計</th>
+    <th align="left">資産運用</th>
+  </tr>
+</table>

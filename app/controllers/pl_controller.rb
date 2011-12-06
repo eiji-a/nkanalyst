@@ -2,6 +2,20 @@
 class PlController < ApplicationController
 
   
+  def analysis
+    load_siten(params)
+    if @siten == nil
+    end
+
+    load_allmonth(@serial, @siten)
+    y, m = Month.yyyy_mm(@serial)
+    @title = "#{y}年#{m}月度実績: #{@siten.name}"
+    @month = m
+
+    respond_to do |format|
+      format.html
+    end
+  end
 
   def monthly
     load_siten(params)
@@ -50,6 +64,25 @@ class PlController < ApplicationController
     @zisseki = Zisseki.load(serial, siten)
     @yosan   = Yosan.load(serial, siten)
     @keiri   = Keiripl.load(serial, siten)
+    @czennen  = Zisseki.load_cumulative(Month.last_year(serial), siten)
+    @czisseki = Zisseki.load_cumulative(serial, siten)
+    @cyosan   = Yosan.load_cumulative(serial, siten)
+    @ckeiri   = Keiripl.load_cumulative(serial, siten)
+  end
+
+  def load_allmonth(serial, siten)
+    @zennen = []
+    @zisseki = []
+    @yosan = []
+    @keiri = []
+    first = Month.first_month(serial)
+    12.times  do |i|
+      month = first + i
+      @zennen[i] = Zisseki.load(Month.last_year(month), siten)
+      @zisseki[i] = Zisseki.load(month, siten)
+      @yosan[i] = Yosan.load(month, siten)
+      @keiri[i] = Keiripl.load(month, siten)
+    end
     @czennen  = Zisseki.load_cumulative(Month.last_year(serial), siten)
     @czisseki = Zisseki.load_cumulative(serial, siten)
     @cyosan   = Yosan.load_cumulative(serial, siten)
