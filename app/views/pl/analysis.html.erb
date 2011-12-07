@@ -1,7 +1,8 @@
 <div align="right" class="page_menu">
-
+  <%= link_to '実績',
+    :action => :monthly, :id => @siten.id,
+    :month => @serial %>
 </div>
-<hr>
 
 <table width="100%" class="monthly">
   <tr>
@@ -42,8 +43,8 @@
   </tr>
   <% serial = Month.first_month(@serial) %>
   <% 12.times do |i| %>
-  <%   yy, mm = Month.yyyy_mm(serial + i) %>
-  <%= render :partial => 'analysis', :locals => {:month => mm, 
+  <%= render :partial => 'analysis', :locals => {:serial => serial + i,
+    :siten_id => @siten.id,
     :zennen => @zennen[i], :yosan => @yosan[i],
     :keiri => @keiri[i], :zisseki => @zisseki[i],
     :zenruikei => @zenruikei[i],
@@ -55,3 +56,4 @@
     <th align="left">資産運用</th>
   </tr>
 </table>
+<br />

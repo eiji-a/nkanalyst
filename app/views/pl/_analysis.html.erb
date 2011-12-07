@@ -1,5 +1,8 @@
 <tr>
-  <th rowspan="3"><%= month %></th>
+  <% yy, mm = Month.yyyy_mm(serial) %>
+  <th rowspan="3">
+    <%= link_to mm, :id => siten_id, :month => serial %>
+  </th>
   <th>前期</th>
   <%= render :partial => 'analysis_items', :locals => {:data => zennen,
     :ruikei => zenruikei}%>

@@ -1,4 +1,8 @@
 <div align="right" class="page_menu">
+  <%= link_to '分析',
+    :action => :analysis, :id => @siten.id,
+    :month => @serial %>
+  |
   <%= link_to '年度実績',
     :action => :yearly, :id => @siten.id,
     :year => Month.year(@serial) %>
@@ -27,7 +31,7 @@
     <th colspan="11" align="left"><span class="ruikei">累計</span></th>
   </tr>
   <tr>
-    <th colspan="2" width="12%"></th>
+    <th colspan="2"></th>
     <th width="4.5%">
       <%= link_to '昨年実績', :id => @siten.id,
         :month => Month.prev_year(@serial) %>
