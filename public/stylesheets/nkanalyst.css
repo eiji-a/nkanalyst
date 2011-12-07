@@ -82,7 +82,18 @@ span.title {
 
 table.monthly {
     border-collapse: collapse;
-    border: 0px;
+    border-top: 1px solid #663300;
+    border-left: 1px solid #663300;
+}
+
+.monthly th {
+    border-right: 1px solid #663300;
+    border-bottom: 1px solid #663300;
+}
+
+.monthly td {
+    border-right: 1px solid #663300;
+    border-bottom: 1px solid #663300;
 }
 
 td.nknumber {

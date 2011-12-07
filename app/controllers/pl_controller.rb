@@ -9,9 +9,18 @@ class PlController < ApplicationController
 
     load_allmonth(@serial, @siten)
     y, m = Month.yyyy_mm(@serial)
-    @title = "#{y}年#{m}月度実績: #{@siten.name}"
     @month = m
+    @title = "#{y}年#{m}月度分析: #{@siten.name}"
 
+    @zenruikei = [@zennen[0].eigyorieki]
+    @yoruikei  = [@yosan[0].eigyorieki]
+    @ziruikei  = [@zisseki[0].eigyorieki]
+    11.times do |i|
+      @zenruikei[i + 1] = @zenruikei[i] + @zennen[i + 1].eigyorieki
+      @yoruikei[i + 1]  = @yoruikei[i]  + @yosan[i + 1].eigyorieki
+      @ziruikei[i + 1]  = @ziruikei[i]  + @zisseki[i + 1].eigyorieki
+    end
+    
     respond_to do |format|
       format.html
     end
@@ -92,7 +101,7 @@ class PlController < ApplicationController
   # 実績更新
   def zedit
     load_siten(params)
-    @zisseki = Zisseki.load(@month, @siten)
+    @zisseki = Zisseki.load(@serial, @siten)
     y, m = Month.yyyy_mm(@serial)
     @title = "[更新] #{y}年度#{m}月度実績: #{@siten.name}"
 

@@ -19,60 +19,59 @@
     :action => :monthly, :id => @siten.id,
     :month => Month.next_year(@serial) %>
 </div>
-<hr>
 
-<table width="100%" border="0">
+<table width="100%" class="monthly">
   <tr>
     <th colspan="2"></th>
     <th colspan="11" align="left"><span class="tangetu">単月</span></th>
     <th colspan="11" align="left"><span class="ruikei">累計</span></th>
   </tr>
   <tr>
-    <th colspan="2"></th>
-    <th>
+    <th colspan="2" width="12%"></th>
+    <th width="4.5%">
       <%= link_to '昨年実績', :id => @siten.id,
         :month => Month.prev_year(@serial) %>
     </th>
-    <th>予算
+    <th width="4.5%">予算
       <% if @siten.summary_flag == Siten::REAL %>
       <%= link_to (image_tag 'edit12.gif'), :action => :yedit,
       :id => @siten.id, :month => @serial %>
       <% end %>
     </th>
-    <th>実績
+    <th width="4.5%">実績
       <% if @siten.summary_flag == Siten::REAL %>
       <%= link_to (image_tag 'edit12.gif'), :action => :zedit,
       :id => @siten.id, :month => @serial %>
       <% end %>
     </th>
-    <th>実売率</th>
-    <th>昨年対比</th>
-    <th>昨対率</th>
-    <th>予算対比</th>
-    <th>目標率</th>
-    <th>経理
+    <th width="3%">実売率</th>
+    <th width="4.5%">昨年対比</th>
+    <th width="3%">昨対率</th>
+    <th width="4.5%">予算対比</th>
+    <th width="3%">目標率</th>
+    <th width="4.5%">経理
       <% if @siten.summary_flag == Siten::REAL %>
       <%= link_to (image_tag 'edit12.gif'), :action => :kedit,
       :id => @siten.id, :month => @serial %>
       <% end %>
     </th>
-    <th>経理差額</th>
-    <th>経理対比</th>
+    <th width="4.5%">経理差額</th>
+    <th width="4.5%">経理対比</th>
     <!-- 累計 -->
-    <th>昨年実績</th>
-    <th>予算</th>
-    <th>実績</th>
-    <th>実売率</th>
-    <th>昨年対比</th>
-    <th>昨対率</th>
-    <th>予算対比</th>
-    <th>目標率</th>
-    <th>経理</th>
-    <th>経理差額</th>
-    <th>経理対比</th>
+    <th width="4.5%">昨年実績</th>
+    <th width="4.5%">予算</th>
+    <th width="4.5%">実績</th>
+    <th width="3%">実売率</th>
+    <th width="4.5%">昨年対比</th>
+    <th width="3%">昨対率</th>
+    <th width="4.5%">予算対比</th>
+    <th width="3%">目標率</th>
+    <th width="4.5%">経理</th>
+    <th width="4.5%">経理差額</th>
+    <th width="4.5%">経理対比</th>
   </tr>
   <tr>
-    <th align="left" colspan="12">利益</th>
+    <th align="left" colspan="25">利益</th>
   </tr>
   <% (Zisseki::RIEKI_INPUT + Zisseki::RIEKI_VIEW).each do |ip| %>
     <%= render :partial => 'monthly_item', :locals => {:name => ip[0],
@@ -85,7 +84,7 @@
   <% end %>
 
   <tr>
-    <th colspan="9" align="left">費用</th>
+    <th colspan="25" align="left">費用</th>
   </tr>
   <% (Zisseki::HIYO_INPUT + Zisseki::HIYO_VIEW).each do |ip| %>
     <%= render :partial => 'monthly_item', :locals => {:name => ip[0],
@@ -98,7 +97,7 @@
   <% end %>
 
   <tr>
-    <th colspan="9", align="left">営業利益</th>
+    <th colspan="25", align="left">営業利益</th>
   </tr>
   <% (Zisseki::EIRI_INPUT + Zisseki::EIRI_VIEW).each do |ip| %>
     <%= render :partial => 'monthly_item', :locals => {:name => ip[0],
@@ -111,7 +110,7 @@
   <% end %>
 
   <tr>
-    <th colspan="9", align="left">経常利益</th>
+    <th colspan="25", align="left">経常利益</th>
   </tr>
   <% (Zisseki::KEIZYO_INPUT + Zisseki::KEIZYO_VIEW).each do |ip| %>
     <%= render :partial => 'monthly_item', :locals => {:name => ip[0],
@@ -124,6 +123,5 @@
   <% end %>
 
 </table>
-<hr>
 
 
