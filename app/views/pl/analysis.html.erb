@@ -1,45 +1,35 @@
 <div align="right" class="page_menu">
-  <%= link_to '実績',
+  <%= link_to '損益計算',
     :action => :monthly, :id => @siten.id,
     :month => @serial %>
 </div>
 
 <table width="100%" class="monthly">
   <tr>
-    <th colspan="2"></th>
-    <th colspan="13" align="left"><span class="tangetu">単月</span></th>
-    <th colspan="13" align="left"><span class="ruikei">累計</span></th>
-  </tr>
-  <tr>
     <th colspan="2">月</th>
-  <!--- 単月 --->
     <th>売上</th>
     <th>仕入</th>
-    <th>支間</th>
-    <th>期首</th>
-    <th>期末</th>
-    <th>増減</th>
+    <th>支店間</th>
+    <th>期首在庫</th>
+    <th>期末在庫</th>
+    <th>在庫増減</th>
     <th>粗利</th>
     <th>粗利%</th>
     <th>経費</th>
     <th>経費%</th>
     <th>雑収入</th>
-    <th>営業利</th>
-    <th>営利計</th>
-  <!--- 累計 --->
-    <th>売上</th>
-    <th>仕入</th>
-    <th>支間</th>
-    <th>期首</th>
-    <th>期末</th>
-    <th>増減</th>
-    <th>粗利</th>
-    <th>粗利%</th>
-    <th>経費</th>
-    <th>経費%</th>
-    <th>雑収入</th>
-    <th>営業利</th>
-    <th>営利計</th>
+    <th>営業利益</th>
+    <th>営利累計</th>
+    <th>雑収税抜</th>
+    <th>受取利息</th>
+    <th>外収益計</th>
+    <th>支払利息</th>
+    <th>雑損失</th>
+    <th>外損失計</th>
+    <th>外損益計</th>
+    <th>消費税戻</th>
+    <th>経常利益</th>
+    <th>経利累計</th>
   </tr>
   <% serial = Month.first_month(@serial) %>
   <% 12.times do |i| %>
@@ -49,11 +39,42 @@
     :keiri => @keiri[i], :zisseki => @zisseki[i],
     :zenruikei => @zenruikei[i],
     :yoruikei => @yoruikei[i],
-    :ziruikei => @ziruikei[i]} %>
+    :ziruikei => @ziruikei[i],
+    :kzenruikei => @kzenruikei[i],
+    :kyoruikei => @kyoruikei[i],
+    :kziruikei => @kziruikei[i]}
+   %>
   <% end %>
+  <!--- 累計他 --->
   <tr>
     <th colspan="14" align="left"><%= @month %>月累計</th>
-    <th align="left">資産運用</th>
+    <th align="left">資金運用</th>
+    <th colspan="10" align="left">月累計</th>
+  </tr>
+  <tr>
+    <th colspan="2">前期累計</th>
+    <%= render :partial => 'analysis_items', :locals => {:data => @czennen,
+      :ruikei => 0, :kruikei => 0}%>
+  </tr>
+  <tr>
+    <th colspan="2">目標累計</th>
+    <%= render :partial => 'analysis_items', :locals => {:data => @cyosan,
+      :ruikei => 0, :kruikei => 0}%>
+  </tr>
+  <tr>
+    <th colspan="2">当期累計</th>
+    <%= render :partial => 'analysis_items', :locals => {:data => @czisseki,
+      :ruikei => 0, :kruikei => 0}%>
+  </tr>
+  <tr>
+    <th colspan="2">前増減率</th>
+    <%= render :partial => 'analysis_zogenrate',
+     :locals => {:zennen => @czennen, :zisseki => @czisseki}%>
+  </tr>
+  <tr>
+    <th colspan="2">前増減額</th>
+    <%= render :partial => 'analysis_zogen',
+     :locals => {:zennen => @czennen, :zisseki => @czisseki}%>
   </tr>
 </table>
 <br />

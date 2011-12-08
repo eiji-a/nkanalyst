@@ -5,15 +5,15 @@
   </th>
   <th>前期</th>
   <%= render :partial => 'analysis_items', :locals => {:data => zennen,
-    :ruikei => zenruikei}%>
+    :ruikei => zenruikei, :kruikei => kzenruikei}%>
 </tr>
 <tr>
   <th>目標</th>
   <%= render :partial => 'analysis_items', :locals => {:data => yosan,
-    :ruikei => yoruikei}%>
+    :ruikei => yoruikei, :kruikei => kyoruikei}%>
 </tr>
 <tr>
   <th>当期</th>
   <%= render :partial => 'analysis_items', :locals => {:data => zisseki,
-    :ruikei => ziruikei}%>
+    :ruikei => ziruikei, :kruikei => kziruikei}%>
 </tr>

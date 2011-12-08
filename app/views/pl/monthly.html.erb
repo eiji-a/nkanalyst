@@ -1,5 +1,5 @@
 <div align="right" class="page_menu">
-  <%= link_to '分析',
+  <%= link_to '損益分析',
     :action => :analysis, :id => @siten.id,
     :month => @serial %>
   |
@@ -113,19 +113,7 @@
       :curiage => @curiage} %>
   <% end %>
 
-  <tr>
-    <th colspan="25", align="left">経常利益</th>
-  </tr>
-  <% (Zisseki::KEIZYO_INPUT + Zisseki::KEIZYO_VIEW).each do |ip| %>
-    <%= render :partial => 'monthly_item', :locals => {:name => ip[0],
-      :zennen => @zennen.send(ip[1]), :yosan => @yosan.send(ip[1]),
-      :keiri => @keiri.send(ip[1]), :zisseki => @zisseki.send(ip[1]),
-      :uriage => @uriage,
-      :czennen => @czennen.send(ip[1]), :cyosan => @cyosan.send(ip[1]),
-      :ckeiri => @ckeiri.send(ip[1]), :czisseki => @czisseki.send(ip[1]),
-      :curiage => @curiage} %>
-  <% end %>
-
 </table>
+<br />
 
 

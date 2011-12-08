@@ -10,15 +10,21 @@ class PlController < ApplicationController
     load_allmonth(@serial, @siten)
     y, m = Month.yyyy_mm(@serial)
     @month = m
-    @title = "#{y}年#{m}月度分析: #{@siten.name}"
+    @title = "損益分析: #{@siten.name} (#{y}年#{m}月度)"
 
     @zenruikei = [@zennen[0].eigyorieki]
     @yoruikei  = [@yosan[0].eigyorieki]
     @ziruikei  = [@zisseki[0].eigyorieki]
+    @kzenruikei = [@zennen[0].keizyorieki]
+    @kyoruikei  = [@yosan[0].keizyorieki]
+    @kziruikei  = [@zisseki[0].keizyorieki]
     11.times do |i|
       @zenruikei[i + 1] = @zenruikei[i] + @zennen[i + 1].eigyorieki
       @yoruikei[i + 1]  = @yoruikei[i]  + @yosan[i + 1].eigyorieki
       @ziruikei[i + 1]  = @ziruikei[i]  + @zisseki[i + 1].eigyorieki
+      @kzenruikei[i + 1] = @kzenruikei[i] + @zennen[i + 1].keizyorieki
+      @kyoruikei[i + 1]  = @kyoruikei[i]  + @yosan[i + 1].keizyorieki
+      @kziruikei[i + 1]  = @kziruikei[i]  + @zisseki[i + 1].keizyorieki
     end
     
     respond_to do |format|
@@ -36,7 +42,7 @@ class PlController < ApplicationController
     @uriage = @zisseki.uriage
     @curiage = @czisseki.uriage
     y, m = Month.yyyy_mm(@serial)
-    @title = "#{y}年#{m}月度実績: #{@siten.name}"
+    @title = "損益計算: #{@siten.name} (#{y}年#{m}月度)"
 
     respond_to do |format|
       format.html
