@@ -11,7 +11,7 @@
 <body>
   <div id="page">
     <div id="header">
-      <table width="100%" border="0">
+      <table width="100%" class="title">
         <tr>
           <td width="320px" rowspan="3" class="header">
 	    <%= image_tag 'nk_title.gif' %>
@@ -38,17 +38,19 @@
 	  </td>
 	</tr>
 	<tr>
-	  <td align="right">
-	    <b>支店: </b>
+	  <td align="right" class="menu_line">
 	    <% if @menu_set != nil %>
-	    |
+	    <table class="title">
+              <tr>
             <% @menu_set.details.each do |d| %>
-	    <span class="siten_bar">
-              <%= link_to d.siten.dispname, :controller => :pl,
-                :action => :monthly, :id => d.siten.id, :month => @serial %>
-	    </span>
-	    |
+	      <% lb = if d.siten.id == @siten.id then "siten_lb1" else "siten_lb2" end %>
+		<td class="<%= lb %>">
+                  [ <%= link_to d.siten.dispname, :controller => :pl,
+                  :action => :monthly, :id => d.siten.id, :month => @serial %> ]
+		</td>
             <% end %>
+	      </tr>
+	    </table>
 	    <% end %>
 	  </td>
 	</tr>

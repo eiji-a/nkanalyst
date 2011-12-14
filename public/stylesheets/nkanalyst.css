@@ -50,7 +50,7 @@ div#main {
     margin-bottom: 0;
     padding-top: 0;
     padding-left: 10px;
-    background: #eda;
+    background: #fc5;
 }
 
 div#footer {
@@ -59,6 +59,16 @@ div#footer {
     border-top: 5px solid #227;
     margin: 0;
     padding: 0;
+}
+
+th {
+    background: #fec;
+    color: black;
+}
+
+td {
+    background: #fff;
+    color: black;
 }
 
 td.header {
@@ -79,6 +89,7 @@ span.menu_line {
     font-size: 9pt;
     font-weight: normal;
     margin: 0px;
+    padding: 0px;
 }
 
 span.title {
@@ -87,12 +98,21 @@ span.title {
     font-weight: bold;
 }
 
-span.siten_bar {
-    background: #8f8;
+table.title {
+    border-collapse: collapse;
+    border: 0px;
     margin: 0px;
     padding: 0px;
+}
+
+td.siten_lb1 {
+    background: #fc5;
     font-size: 10pt;
     font-weight: bold;
+}
+
+td.siten_lb2 {
+    background: #fff;
 }
 
 table.monthly {
